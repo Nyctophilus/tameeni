@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const CollapsableTab = ({ name, icon, subs, foot, content }) => {
+const CollapsableTab = ({ name, icon, subs, sidebar, foot, content }) => {
   const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(0);
   const ul = useRef(null);
@@ -43,10 +43,8 @@ const CollapsableTab = ({ name, icon, subs, foot, content }) => {
           )}
           <span
             className={`absolute top-1/2 -translate-y-1/2 ${
-              foot || content
-                ? "text-xl font-bold right-28"
-                : "text-sm font-medium right-[55px]"
-            } ${content ? "text-2xl" : ""}`}
+              foot ? "text-lg font-bold" : sidebar ? "right-[55px]" : ""
+            } ${content ? "text-base md:text-xl font-bold right-28" : ""}`}
           >
             {name}
           </span>

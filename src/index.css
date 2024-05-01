@@ -8,6 +8,56 @@ body {
   font-family: "Tajawal", sans-serif;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .container {
   @apply px-4;
+}
+
+.swiper-button-next:after, .swiper-button-prev:after {
+  color: #c3c2cb;
+}
+
+.has-tooltip{
+  @apply relative;
+}
+.tooltip {
+  @apply invisible absolute left-1/2 -translate-x-1/2 -top-1;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+
+.captcha {
+ scale: .5;
+}
+
+@media screen and (max-width: 480px) {
+  .captcha {
+      width: 70%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .captcha {
+      width: 80%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .captcha {
+      width: 93%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .captcha {
+      width: 100%;
+      float: left;
+  }
 }

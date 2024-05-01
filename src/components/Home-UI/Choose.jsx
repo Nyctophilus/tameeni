@@ -3,9 +3,9 @@ import CollapsableTab from "../CollapsableTab";
 
 const Choose = () => {
   return (
-    <section className="py-20">
+    <section className="py-10">
       <div className="container mx-auto">
-        <h2 className="text-4xl text-center font-bold sm:text-4xl mb-10 text-[#575757]">
+        <h2 className="text-3xl text-center font-bold sm:text-4xl text-[#575757]">
           إيش هي التغطية التأمينية اللي اختارها للسيارة؟
         </h2>
 

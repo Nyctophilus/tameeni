@@ -22,6 +22,7 @@ const Sidebar = ({ show }) => {
                   name={link.name}
                   icon={link.icon}
                   subs={link.subs}
+                  sidebar
                 />
               );
 

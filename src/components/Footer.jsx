@@ -3,7 +3,7 @@ import CollapsableTab from "./CollapsableTab";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#575757] text-white relative">
+    <footer className="bg-[#575757] text-white relative max-md:pb-10">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-start lg:gap-8">
           <div className="mt-0 w-full flex flex-col md:flex-row gap-8 justify-between">
@@ -98,7 +98,7 @@ const Footer = () => {
       </div>
 
       <img
-        className="absolute left-0 bottom-0"
+        className="absolute left-0 bottom-0 max-md:opacity-30"
         src="/footer-rightside.webp"
         alt="footer illustration"
       />

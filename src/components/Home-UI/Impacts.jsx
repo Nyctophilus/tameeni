@@ -23,9 +23,9 @@ const Impacts = () => {
   ];
 
   return (
-    <section className="bg-secondary py-20">
+    <section className="bg-secondary py-10">
       <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl mb-10 text-[#575757]">
+        <h2 className="text-3xl font-bold sm:text-4xl text-[#575757]">
           إيش اللي يأثر على سعر وثيقة تأمين للسيارات؟
         </h2>
 
@@ -39,7 +39,7 @@ const Impacts = () => {
           {boxs.map((box) => (
             <div
               key={box.name}
-              className="w-60 p-4 border-2 rounded-md flex flex-col items-center gap-4"
+              className="max-md:basis-[45%] w-60 p-4 border-2 rounded-md flex flex-col items-center gap-4"
             >
               <img
                 src={box.icon}

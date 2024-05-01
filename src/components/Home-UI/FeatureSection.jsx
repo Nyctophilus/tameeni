@@ -1,10 +1,10 @@
-import CarouselFull from "../CarouselFull";
+import Gallery from "./Gallery";
 
 const FeatureSection = () => {
   return (
-    <section className="py-20">
+    <section className="pt-10">
       <div className="container mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-md:text-sm">
           <div className="p-4 border-2 rounded-md flex flex-col items-center gap-4">
             <img
               src={"/feat/feature-offers.png"}
@@ -90,7 +90,7 @@ const FeatureSection = () => {
         </div>
       </div>
 
-      <CarouselFull />
+      <Gallery />
     </section>
   );
 };

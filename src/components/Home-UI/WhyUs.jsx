@@ -4,9 +4,9 @@ import CollapsableTab from "../CollapsableTab";
 
 const WhyUs = () => {
   return (
-    <section className="bg-secondary py-20">
+    <section className="bg-secondary py-10">
       <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl mb-10 text-[#575757]">
+        <h2 className="text-3xl font-bold sm:text-4xl text-[#575757]">
           ليه أشتري وثيقة التأمين من تأميني؟
         </h2>
 
