@@ -10,7 +10,7 @@ const Header = () => {
 
             <a className="block max-md:mx-auto" href="#">
               <label className="sr-only">Home</label>
-              <img src="/logo.svg" alt="logo" />
+              <img src="/assets/images/logo.svg" alt="logo" />
             </a>
           </div>
 

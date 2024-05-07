@@ -28,7 +28,7 @@
 }
 .innerText {
   width: 90%;
-  margin: 0 auto 40px;
+  margin-inline: auto ;
   text-align: center;
   font-size: 22px;
   line-height: 32px;
@@ -51,7 +51,7 @@
   gap: 0.25rem;
   width: 100%;
   height: 100%;
-  border: 2px solid #c3c2cb;
+  border: 1px solid #c3c2cb;
   border-radius: 8px;
   font-size: 14px;
   font-weight: bold;
@@ -68,7 +68,7 @@
 .insurance_tabs_item_link::before {
   position: absolute;
   border-style: solid;
-  border-width: 2px 2px 0 0;
+  border-width: 1px 1px 0 0;
   border-radius: 4px 2px 2px 2px;
   content: "";
   display: inline-block;
@@ -86,7 +86,7 @@
   transition: all 0.3s ease-in-out;
 }
 .insurance_tabs_item_link__active {
-  border: 2px solid #149ade;
+  border: 1px solid #149ade;
   background-color: #e9f8ff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.13);
 }

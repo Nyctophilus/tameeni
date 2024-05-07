@@ -1,7 +1,7 @@
 export default [
   {
     name: "تأمين السيارات",
-    icon: "/car-icon.svg",
+    icon: "/assets/images/car-icon.svg",
     collapse: true,
     subs: [
       { name: "تأمين ضد الغير", href: "/" },
@@ -14,12 +14,12 @@ export default [
   {
     name: "التأمين الطبي",
     href: "/health",
-    icon: "/healthmenu-icon.svg",
+    icon: "/assets/images/healthmenu-icon.svg",
     collapse: false,
   },
   {
     name: "خدماتي",
-    icon: "/supportmenu-icon.svg",
+    icon: "/assets/images/supportmenu-icon.svg",
     collapse: true,
     subs: [{ name: "استعلام عن حالة ربط الوثيقة بالمرور", href: "/" }],
   },
@@ -27,21 +27,21 @@ export default [
   {
     name: "برنامج قطاف (ادفع و اكسب)",
     href: "/",
-    icon: "/qitafmenu-icon.svg",
+    icon: "/assets/images/qitafmenu-icon.svg",
     collapse: false,
   },
 
   {
     name: "الأسئلة الشائعة",
     href: "/",
-    icon: "/faq-sidemenu.webp",
+    icon: "/assets/images/faq-sidemenu.webp",
     collapse: false,
   },
 
   {
     name: "تواصل معنا",
     href: "/",
-    icon: "/contactmenu-icon.svg",
+    icon: "/assets/images/contactmenu-icon.svg",
     collapse: false,
   },
 ];

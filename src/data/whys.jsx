@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const whys = [
   {
     name: "الأول في المملكة",
-    icon: "/whys/gicon-01.png",
+    icon: "/assets/images/whys/gicon-01.png",
     content: (
       <p className="text-gray-600 font-medium text-right">
         الأول في المملكة: بسبب خبرتنا كأول موقع في المملكة لمقارنة
@@ -18,7 +18,7 @@ export const whys = [
   },
   {
     name: "مكان واحد للتأمين",
-    icon: "/whys/gicon-02.webp",
+    icon: "/assets/images/whys/gicon-02.webp",
     content: (
       <p className="text-gray-600 font-medium text-right">
         تجديد التأمين مهمة صعبة وطويلة، لذلك احنا في تأميني جمعنا لك عروض شركات
@@ -29,7 +29,7 @@ export const whys = [
   },
   {
     name: "شفافية ووضوح",
-    icon: "/whys/gicon-03.webp",
+    icon: "/assets/images/whys/gicon-03.webp",
     content: (
       <p className="text-gray-600 font-medium text-right">
         ما نحب مفردات التأمين المعقدة، ولا نحبها لعملائنا. لذلك دائماً نخلي
@@ -39,7 +39,7 @@ export const whys = [
   },
   {
     name: "فريق فني وقانوني",
-    icon: "/whys/gicon-04.webp",
+    icon: "/assets/images/whys/gicon-04.webp",
     content: (
       <p className="text-gray-600 font-medium text-right">
         نظام إننا نبيع وننساك مو من قاموسنا. جهزنا لك فريق فني وقانوني متمرس
@@ -49,7 +49,7 @@ export const whys = [
   },
   {
     name: "اختيارات متنوعه",
-    icon: "/whys/gicon-05.webp",
+    icon: "/assets/images/whys/gicon-05.webp",
     content: (
       <p className="text-gray-600 font-medium text-right">
         مع تأميني، صار شبه مستحيل ما تحصل اللي تبيه!
@@ -58,7 +58,7 @@ export const whys = [
   },
   {
     name: "أسعارنا موحدة",
-    icon: "/whys/gicon-06.webp",
+    icon: "/assets/images/whys/gicon-06.webp",
     content: (
       <p className="text-gray-600 font-medium text-right">
         إذا أسعارنا ما كانت أقل من شركة التأمين، فهي راح تكون نفسها. بالضبط..

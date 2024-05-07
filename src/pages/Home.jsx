@@ -1,11 +1,11 @@
-import BottomWithImage from "../components/Home-UI/BottomWithImage";
+import BottomWithImage from "../components/Home/BottomWithImage";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import HeroSection from "../components/HeroSection";
-import Impacts from "../components/Home-UI/Impacts";
-import Choose from "../components/Home-UI/Choose";
-import WhyUs from "../components/Home-UI/WhyUs";
-import FeatureSection from "../components/Home-UI/FeatureSection";
+import Impacts from "../components/Home/Impacts";
+import Choose from "../components/Home/Choose";
+import WhyUs from "../components/Home/WhyUs";
+import FeatureSection from "../components/Home/FeatureSection";
 
 const Home = () => {
   return (

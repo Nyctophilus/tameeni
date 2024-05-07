@@ -40,20 +40,21 @@ const Footer = () => {
             <div>
               <img
                 className="mx-auto"
-                src="/footer-vision-logo.svg"
+                src="/assets/images/footer-vision-logo.svg"
                 alt="footer vision logo"
               />
             </div>
 
             <div>
-              <ul className="flex gap-6 max-md:justify-center">
+              <ul className="flex gap-6 justify-center lg:justify-normal">
                 {socials.map((social) => (
                   <li key={social.name}>
-                    <a
-                      href={social.href}
+                    <button
+                      // href={social.href}
                       rel="noreferrer"
                       target="_blank"
                       className="transition hover:opacity-75"
+                      aria-disabled
                     >
                       <span className="sr-only">{social.name}</span>
                       <img
@@ -61,35 +62,39 @@ const Footer = () => {
                         src={social.icon}
                         alt={`${social.name} icon`}
                       />
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
 
-              <div className="flex gap-2 justify-center mt-6">
+              {/* <div className="flex gap-2 justify-center mt-6">
                 <img
                   className="w-32 max-w-[33%]"
-                  src="/Google-play.webp"
+                  src="/assets/images/Google-play.webp"
                   alt="google play logo"
                 />
                 <img
                   className="w-32 max-w-[33%]"
-                  src="/app-store.webp"
+                  src="/assets/images/app-store.webp"
                   alt="app store logo"
                 />
                 <img
                   className="w-32 max-w-[33%]"
-                  src="/App-Gallery.webp"
+                  src="/assets/images/App-Gallery.webp"
                   alt="App Gallery logo"
                 />
-              </div>
+              </div> */}
 
-              <div className="flex flex-col gap-4 mt-6 relative z-10">
+              <div className="flex flex-col gap-4 mt-6 relative z-10 text-center lg:text-right">
                 <p>© تأميني 2024. جميع الحقوق محفوظة</p>
                 <p>شركة تأميني لوساطة التأمين الالكتروني شركة شخص واحد</p>
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center justify-center lg:justify-normal">
                   <p>تطوير وتشغيل </p>
-                  <img src="/RasanLogo.webp" alt="Rasan logo" className="h-4" />
+                  <img
+                    src="/assets/images/RasanLogo.webp"
+                    alt="Rasan logo"
+                    className="h-4"
+                  />
                 </div>
               </div>
             </div>
@@ -99,7 +104,7 @@ const Footer = () => {
 
       <img
         className="absolute left-0 bottom-0 max-md:opacity-30"
-        src="/footer-rightside.webp"
+        src="/assets/images/footer-rightside.webp"
         alt="footer illustration"
       />
     </footer>

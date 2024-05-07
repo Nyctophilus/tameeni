@@ -1,4 +1,4 @@
-import { validateSAID } from "./helpers";
+import { validateLanguage, validateSAID } from "./helpers";
 
 // رقم وطني
 // 1005048333
@@ -6,33 +6,68 @@ import { validateSAID } from "./helpers";
 // رقم تسلسلي
 // 455666710
 
-export const handleSubmitTab = (e, recap, setError) => {
+export const handleSubmitTab = (e, setError) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  recap && formData.set("g-recaptcha-response", recap);
+
   const id = formData.get("id"),
     serial = formData.get("serial"),
+    recap = formData.get("recap"),
     meter = formData.get("meter"),
     date = formData.get("date"),
-    reason = formData.get("reason");
-  const isIdValid = id !== null ? validateSAID(id) : null;
+    value = formData.get("value"),
+    name = formData.get("name"),
+    phone = formData.get("phone");
   const error = {};
 
-  console.log(Object.fromEntries(formData));
+  if (id !== null) {
+    const isIdValid = validateSAID(id);
 
-  error.id =
-    isIdValid === -1
+    error.id = !id
+      ? "رقم الهوية مطلوب"
+      : isIdValid === -1
       ? "رقم الهوية المدخل غير صحيح، يرجى إعادة إدخال رقم الهوية الصحيح"
       : null;
+  }
+  if (name !== null) {
+    const isNameValid = validateLanguage(name);
+
+    error.name = !name
+      ? "أسم مقدم الطلب مطلوب"
+      : isNameValid !== "ar"
+      ? "الأسم غير صحيح. يجب أن يكون باللغة العربية"
+      : null;
+  }
+
   error.serial = !serial && serial !== null ? "الرقم التسلسلى مطلوب" : null;
   error.meter = !meter && meter !== null ? "قراءة العداد مطلوبة" : null;
   error.date = !date && date !== null ? "تاريخ بدء الوثيقة مطلوب" : null;
-  error.recap = !recap && recap !== null ? "رمز التحقق مطلوب" : null;
+  error.phone = !phone && phone !== null ? "رقم الجوال مطلوب" : null;
+  error.value =
+    !value && value !== null ? "القيمة التقديرية للمركبة مطلوبة" : null;
+  if (recap !== null)
+    error.recap = !recap
+      ? "رمز التحقق مطلوب"
+      : recap !== "8610"
+      ? "رمز التحقق غير صحيح"
+      : null;
 
   setError(error);
-  console.log(error);
 
   if (Object.values(error).every((er) => er === null)) {
-    console.log("submit");
+    // const urlData = new URLSearchParams({
+    //   id,
+    //   serial,
+    //   meter,
+    //   date,
+    //   phone,
+    //   reason,
+    // })
+    //   .toString()
+    //   .split("&")
+    //   .filter((q) => !q.includes("null"))
+    //   .join("&");
+
+    return Object.fromEntries(formData);
   }
 };

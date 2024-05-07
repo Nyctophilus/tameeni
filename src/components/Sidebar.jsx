@@ -10,7 +10,7 @@ const Sidebar = ({ show }) => {
       <div className="pt-20 pb-4 py-6">
         <a className="block w-fit mx-auto" href="#">
           <span className="sr-only">Home</span>
-          <img src="/logo.svg" alt="logo" />
+          <img src="/assets/images/logo.svg" alt="logo" />
         </a>
 
         <ul className="mt-6">

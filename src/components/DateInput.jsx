@@ -13,17 +13,16 @@ export default function DateInput({ id, placeholder, required }) {
   const [date, setDate] = useState(null);
 
   return (
-    <div>
+    <div className="relative">
+      <img
+        src="/assets/images/calender.svg"
+        alt="calender icon"
+        className="w-6 h-6 absolute left-3 top-1/2 -translate-y-1/2"
+      />
+
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
-            icon={
-              <img
-                src="/calender.svg"
-                alt="calender icon"
-                className="w-6 h-6 mr-[15.5rem] -mt-[.1rem]"
-              />
-            }
             label={placeholder}
             onChange={() => null}
             value={date ? format(date, "PPP") : ""}

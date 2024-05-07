@@ -37,31 +37,31 @@ export const socials = [
   {
     name: "Twitter",
     href: "#",
-    icon: "/twitter.svg",
+    icon: "/assets/images/twitter.svg",
   },
   {
     name: "Instagram",
     href: "#",
-    icon: "/instagram.svg",
+    icon: "/assets/images/instagram.svg",
   },
   {
     name: "Facebook",
     href: "#",
-    icon: "/facebook.svg",
+    icon: "/assets/images/facebook.svg",
   },
   {
     name: "Snapchat",
     href: "#",
-    icon: "/snapchat.svg",
+    icon: "/assets/images/snapchat.svg",
   },
   {
     name: "Whatsapp",
     href: "#",
-    icon: "/whatsapp.svg",
+    icon: "/assets/images/whatsapp.svg",
   },
   {
     name: "Youtube",
     href: "#",
-    icon: "/youtube.svg",
+    icon: "/assets/images/youtube.svg",
   },
 ];
