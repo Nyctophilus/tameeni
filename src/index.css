@@ -4,12 +4,147 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Tajawal", sans-serif;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 }
 
-input,button{
-  @apply focus-within:outline-none
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dedede;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #2dc1e4;
+}
+
+body,
+html,
+:root {
+  height: 100%;
+  font-family: "Tajawal", sans-serif;
+}
+.PhoneInput {
+  direction: ltr;
+}
+
+.PhoneInput input {
+  outline: none;
+  padding: 0.5rem;
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+}
+
+.loader {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: #efefef;
+  transform: rotateX(65deg) rotate(45deg);
+  color: #34f5c5;
+  animation: layers1 1s linear infinite alternate;
+}
+
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #1dcdfe;
+  animation: layerTr 1s linear infinite alternate;
+}
+@keyframes layers1 {
+  0% {
+    box-shadow: 0px 0px 0 0px;
+  }
+  90%,
+  100% {
+    box-shadow: 20px 20px 0 -4px;
+  }
+}
+@keyframes layerTr {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-25px, -25px) scale(1);
+  }
+}
+
+input,
+button {
+  @apply outline-none;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -18,15 +153,21 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 .container {
   @apply px-4;
 }
 
-.swiper-button-next:after, .swiper-button-prev:after {
+.swiper-button-next:after,
+.swiper-button-prev:after {
   color: #c3c2cb;
 }
 
-.has-tooltip{
+.has-tooltip {
   @apply relative;
 }
 .tooltip {
@@ -38,29 +179,14 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .captcha {
- scale: .5;
+  scale: 0.5;
 }
 
-@media screen and (min-width: 1251px) {
-  .tooltip {
-    max-width: 600px;
-    top: -4rem;
-  }
+.tooltip {
+  translate: 50% 50%;
+  max-width: 500px;
 }
 
-@media screen and (max-width: 1250px) {
-  .tooltip {
-    translate: 50% -100%;
-    top: 23px;
-    max-width: 500px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .tooltip {
-    max-width: 400px;
-  }
-}
 @media screen and (max-width: 768px) {
   .tooltip {
     max-width: 500px;
@@ -69,7 +195,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media screen and (max-width: 480px) {
   .captcha {
-      width: 70%;
+    width: 70%;
   }
   .tooltip {
     max-width: 250px;
@@ -78,25 +204,25 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media screen and (max-width: 425px) {
   .captcha {
-      width: 80%;
+    width: 80%;
   }
 }
 
 @media screen and (max-width: 375px) {
   .captcha {
-      width: 93%;
+    width: 93%;
   }
 }
 
 @media screen and (max-width: 375px) {
   .captcha {
-      width: 100%;
-      float: left;
+    width: 100%;
+    float: left;
   }
 }
 
-
-#plate_number_ksa_wrapper .panel-body #plate-wrapper, #plate_number_ksa_wrapper .panel-body #plate_display_wrapper {
+#plate_number_ksa_wrapper .panel-body #plate-wrapper,
+#plate_number_ksa_wrapper .panel-body #plate_display_wrapper {
   direction: rtl;
 }
 .plate-chars-wrapper {
@@ -173,7 +299,8 @@ select.form-control {
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-transition: border-color ease-in-out 0.15s,
+    box-shadow ease-in-out 0.15s;
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;

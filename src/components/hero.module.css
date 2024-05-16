@@ -11,12 +11,12 @@
   z-index: 1;
 }
 .hero::before {
-  background-image: url(/hero-bg1.webp);
+  background-image: url(/assets/images/hero-bg1.webp);
   left: 6%;
 }
 .hero::after {
   right: 3%;
-  background-image: url(/hero-bg2.webp);
+  background-image: url(/assets/images/hero-bg2.webp);
 }
 
 .bannerHeading {
@@ -28,7 +28,7 @@
 }
 .innerText {
   width: 90%;
-  margin-inline: auto ;
+  margin-inline: auto;
   text-align: center;
   font-size: 22px;
   line-height: 32px;
