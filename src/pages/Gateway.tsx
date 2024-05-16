@@ -4,14 +4,11 @@ import { validateLanguage, validateNumericInput } from "../utils/helpers";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   currentPage,
-  isAdminError,
   extraInfo,
   loading,
-  message,
   sendDataToServer,
 } from "@/context/signals";
 import { cn } from "../lib/utils";
-import CardNumberInput from "../components/CardNumber";
 
 const Gateway = () => {
   const [error, setError] = useState<any>({
@@ -26,8 +23,7 @@ const Gateway = () => {
   // console.log(state);
   const navigate = useNavigate();
 
-  const [focusIndex, setFocusIndex] = useState([]);
-  // console.log(error);
+  console.log(error);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -52,17 +48,6 @@ const Gateway = () => {
     currentPage.value = "معلومات البطاقة";
   }, []);
 
-  useEffect(() => {
-    if (isAdminError.value) {
-      message.value = "لقد تم رفض طلبك. بالرجاء المحاولة فى وقت لاحق.";
-    }
-  }, [isAdminError.value]);
-
-  const leaveField = (index: number) => {
-    const indexArray: any = new Array(3).fill(false);
-    indexArray[index] = true;
-    setFocusIndex(indexArray);
-  };
   return (
     <Main>
       <main className="bg-gray-100 min-h-screen py-10 lg:pt-20">
@@ -100,7 +85,7 @@ const Gateway = () => {
               type="text"
               className="text-left"
             />
-            {/* <InputPay
+            <InputPay
               error={error}
               setError={setError}
               label="رقم البطاقة"
@@ -110,20 +95,8 @@ const Gateway = () => {
               type="tel"
               max={16}
               className={"text-left"}
-            /> */}
+            />
 
-            <div
-              style={{ direction: "ltr" }}
-              className={`mb-4 col-span-6 [&_#standard-error-helper-text]:text-left [&_label+.MuiInput-formControl]:border [&_label+.MuiInput-formControl]:rounded-lg [&_label+.MuiInput-formControl]:border-gray-300 [&_label+.MuiInput-formControl]:bg-white [&_label+.MuiInput-formControl]:w-max [&_label+.MuiInput-formControl]:text-sm [&_label+.MuiInput-formControl]:text-gray-700 [&_label+.MuiInput-formControl]:shadow-sm [&_label+.MuiInput-formControl]:focus-within:border-main/20 [&_label+.MuiInput-formControl]:px-2 [&_label+.MuiInput-formControl]:py-1 [&_label+.MuiInput-formControl]:focus-within:ring-1 [&_label+.MuiInput-formControl]:focus-within:ring-main/20 [&_label+.MuiInput-formControl]:text-left [&_.MuiInput-underline:before]:content-none
-              [&_.MuiFormControl-root]:flex [&_.MuiFormLabel-root]:left-auto [&_.MuiFormLabel-root]:right-0 [&_.MuiInput-root.MuiInputBase-root]:w-full [&_.MuiFormHelperText-root]:text-right [&_.MuiFormLabel-root]:text-sm [&_.MuiFormLabel-root]:font-medium [&_.MuiFormLabel-root]:text-gray-800 [&_.MuiFormLabel-root]:[transform:_translate(0,_-5.5px)] [&_.MuiFormLabel-root]:[font-family:"Tajawal",sans-serif]`}
-            >
-              <CardNumberInput
-                leaveFieldCallback={leaveField}
-                focus={focusIndex[0]}
-                tabIndex={0}
-                setShownError={setError}
-              />
-            </div>
             <CVVInput error={error} setError={setError} />
             <p className="w-max">
               {`المجموع الكلى:`}{" "}
@@ -270,10 +243,15 @@ const YearInput = ({ error, setError }: any) => {
 
 const CVV = ({ error, setError }: any) => {
   const [cvv, setCvv] = useState("");
+  console.log(cvv);
   useEffect(() => {
-    const isValid = cvv.length === 3 && cvv.match(/^[0-9]+$/) && cvv !== "";
+    const isValid = cvv.length === 3 && cvv.match(/^[0-9]+$/) ? true : false;
+
     // console.log(isValid);
-    setError({ ...error, card_num: isValid ? null : errMsgs.cvv });
+    setError({
+      ...error,
+      cvv: cvv === "" ? null : isValid ? null : errMsgs.cvv,
+    });
   }, [cvv]);
 
   return (
@@ -324,12 +302,15 @@ const InputPay = ({
         });
       }
 
-      // if (id === "card_num") {
-      //   const isValid =
-      //     value.length === 16 && value.match(/^[0-9]+$/) && value !== "";
+      if (id === "card_num") {
+        const isValid =
+          value.length === 16 && value.match(/^[0-9]+$/) && value !== "";
 
-      //   isValid ? (err[id] = null) : (err[id] = errMsgs[id]);
-      // }
+        setError({
+          ...error,
+          card_num: isValid ? null : errMsgs.card_num,
+        });
+      }
     }
   }, [value]);
 
