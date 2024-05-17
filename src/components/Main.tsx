@@ -1,39 +1,37 @@
-import {
-  isAdminError,
-  isChat,
-  isNewMessage,
-  loading,
-  message,
-  permissions,
-  socket,
-} from "@/context/signals";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
+// import {
+//   isAdminError,
+//   loading,
+//   message,
+//   permissions,
+//   socket,
+// } from "@/context/signals";
 // import { IoMdChatbubbles } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import Chat from "./Chat";
-import { Toaster } from "@/components/ui/toaster";
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/use-toast";
+// import { useNavigate } from "react-router-dom";
+// import Chat from "./Chat";
+// import { Toaster } from "@/components/ui/toaster";
+// import { ToastAction } from "@/components/ui/toast";
+// import { useToast } from "@/components/ui/use-toast";
 
 function Main({ children }: { children: ReactNode }) {
-  const [chat, setChat] = useState(isChat.value);
-  const navigate = useNavigate();
-  useEffect(() => {
-    socket.value.on(
-      "admin-response",
-      ({ state, next }: { state: boolean; next: string }) => {
-        loading.value = false;
-        permissions.value = [...permissions.value, next];
-        if (state) {
-          navigate("/" + next);
-        } else {
-          isAdminError.value = true;
-          message.value =
-            "الرجاء التاكد من المعلومات الخاصة بك والمحاولة مرة اخرى";
-        }
-      }
-    );
-  }, []);
+  // const [chat, setChat] = useState(isChat.value);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   socket.value.on(
+  //     "admin-response",
+  //     ({ state, next }: { state: boolean; next: string }) => {
+  //       loading.value = false;
+  //       permissions.value = [...permissions.value, next];
+  //       if (state) {
+  //         navigate("/" + next);
+  //       } else {
+  //         isAdminError.value = true;
+  //         message.value =
+  //           "الرجاء التاكد من المعلومات الخاصة بك والمحاولة مرة اخرى";
+  //       }
+  //     }
+  //   );
+  // }, []);
 
   //   <Dialog open={isChat.value} onOpenChange={() => (isChat.value = false)}>
   //   <DialogContent className="h-[500px]">
@@ -45,19 +43,19 @@ function Main({ children }: { children: ReactNode }) {
   // {message.value}
   //  </span>
 
-  const { toast } = useToast();
-  useEffect(() => {
-    if (message.value)
-      toast({
-        description: message.value,
-        action: <ToastAction altText="Goto toast undo">إزالة</ToastAction>,
-      });
-  }, [message.value]);
+  // const { toast } = useToast();
+  // useEffect(() => {
+  //   if (message.value)
+  //     toast({
+  //       description: message.value,
+  //       action: <ToastAction altText="Goto toast undo">إزالة</ToastAction>,
+  //     });
+  // }, [message.value]);
 
   return (
     <>
-      <Toaster />
-
+      {/* <Toaster /> 
+      
       {loading.value && (
         <div className="fixed z-[99999] cursor-wait left-0 top-0 w-full h-full bg-white bg-opacity-80 flex justify-center items-center flex-col gap-4">
           <div className="loader"></div>
@@ -65,11 +63,11 @@ function Main({ children }: { children: ReactNode }) {
             يرجى الانتظار جاري التأكد من صحه البيانات المدخلة
           </span>
         </div>
-      )}
+      )}  */}
 
       {children}
 
-      {chat && (
+      {/* {chat && (
         <div className="h-[500px] lg:max-w-[400px] w-[82dvw] shadow-xl p-3 bg-white border fixed bottom-32 right-10 lg:right-20 border-gray-300  rounded-xl z-[999]">
           <h2 className="absolute text-xl font-bold left-1/2 -translate-x-1/2 text-main">
             خدمة العملاء
@@ -82,7 +80,7 @@ function Main({ children }: { children: ReactNode }) {
         className={`z-[99999] fixed hover:scale-95 transition-all right-10 bottom-10 p-2 text-3xl aspect-square rounded-full cursor-pointer grid place-items-center text-white`}
         onClick={() => setChat(!chat)}
       >
-        {/* <IoMdChatbubbles /> */}
+          <IoMdChatbubbles /> 
         <img
           src="/assets/images/chat-icon-web-ar.svg"
           alt="chat icon"
@@ -93,7 +91,7 @@ function Main({ children }: { children: ReactNode }) {
             {isNewMessage.value}
           </div>
         )}
-      </div>
+      </div>  */}
     </>
   );
 }
