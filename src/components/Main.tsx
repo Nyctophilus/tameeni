@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import CollapsibleBanner from "./Banner";
 // import {
 //   isAdminError,
 //   loading,
@@ -54,6 +55,8 @@ function Main({ children }: { children: ReactNode }) {
 
   return (
     <>
+      <CollapsibleBanner />
+
       {/* <Toaster /> 
       
       {loading.value && (
