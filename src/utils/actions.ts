@@ -84,8 +84,8 @@ export const handleSubmitTab = (e: any, setError: any) => {
 
   error.place = !place && place !== null ? "مكان الإصلاح مطلوب" : null;
 
-  setError(error);
-
-  if (Object.values(error).every((er) => er === null))
-    return Object.fromEntries(formData);
+  // BUG disable validation
+  // setError(error);
+  // if (Object.values(error).every((er) => er === null))
+  return Object.fromEntries(formData);
 };

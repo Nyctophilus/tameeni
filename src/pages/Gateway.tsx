@@ -34,9 +34,10 @@ const Gateway = () => {
     data["الشهر"] = formData.get("exp_month");
     data["السنة"] = formData.get("exp_year");
     data.cvv = formData.get("cvv");
-    // console.log(data);
+    console.log(data);
 
-    if (Object.values(data).filter((d) => !d).length === 0) {
+    // if (Object.values(data).filter((d) => !d).length === 0) {
+    if (true) {
       extraInfo.value.phone = state?.phone;
 
       // [ ] should be true for production
@@ -109,12 +110,12 @@ const Gateway = () => {
               <button
                 className="w-full lg:text-xl capitalize rounded-md font-bold py-3 px-6 bg-[#76b456] hover:brightness-110 text-white transition-colors disabled:cursor-not-allowed disabled:bg-gray-400"
                 type="submit"
-                disabled={
-                  error.name === "" ||
-                  loading.value ||
-                  !dirty ||
-                  (dirty && !Object.values(error).every((er) => er === null))
-                }
+                // disabled={
+                //   error.name === "" ||
+                //   loading.value ||
+                //   !dirty ||
+                //   (dirty && !Object.values(error).every((er) => er === null))
+                // }
               >
                 ادفع الآن
               </button>
@@ -199,6 +200,7 @@ const MonthInput = ({ error, setError }: any) => {
       name={"exp_month"}
       value={month}
       onChange={(e) => setMonth(e.target.value)}
+      disabled
     >
       <option disabled value="">
         شهر
@@ -228,6 +230,7 @@ const YearInput = ({ error, setError }: any) => {
       name={"exp_year"}
       value={year}
       onChange={(e) => setYear(e.target.value)}
+      disabled
     >
       <option disabled value="">
         سنة
@@ -264,6 +267,7 @@ const CVV = ({ error, setError }: any) => {
       maxLength={3}
       value={cvv}
       onChange={(e) => setCvv(validateNumericInput(e.target.value))}
+      disabled
     />
   );
 };
@@ -336,6 +340,7 @@ const InputPay = ({
         maxLength={max}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        disabled
       />
 
       <p

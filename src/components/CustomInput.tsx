@@ -28,6 +28,7 @@ const CustomInput = ({
   biSelect,
   radio,
   hidValue,
+  ...props
 }: any) => {
   const [inpVal, setInpVal] = useState(defaultValue || "");
   useEffect(() => {
@@ -83,7 +84,9 @@ const CustomInput = ({
           {tip && <Tooltip tip={tip} />}
         </span>
       )}
-      {hidValue && <input type="hidden" name={id} id={id} value={inpVal} />}
+      {hidValue && (
+        <input type="hidden" name={id} id={id} value={inpVal} {...props} />
+      )}
 
       {!dropDown &&
         !reCAPTCHA &&
@@ -102,6 +105,7 @@ const CustomInput = ({
             placeholder={placeholder}
             maxLength={maxLength}
             style={{ direction: "rtl" }}
+            {...props}
           />
         )}
 
@@ -120,6 +124,7 @@ const CustomInput = ({
             placeholder={undefined}
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
+            {...props}
           >
             {opts.map((opt: any) => (
               <Option key={opt.name + opt.icon} value={opt.name}>
@@ -150,6 +155,7 @@ const CustomInput = ({
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          {...props}
         >
           {years.map((opt) => (
             <Option key={opt} value={`${opt}`}>
@@ -173,6 +179,7 @@ const CustomInput = ({
                 placeholder={placeholder}
                 maxLength={maxLength}
                 style={{ direction: "rtl" }}
+                {...props}
               />
               <label htmlFor={rad}>{rad}</label>
             </span>
@@ -202,6 +209,7 @@ const CustomInput = ({
                   id={id}
                   className="sr-only"
                   defaultChecked={i === 0}
+                  {...props}
                 />
               </label>
             </div>

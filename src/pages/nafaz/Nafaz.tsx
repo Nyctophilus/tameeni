@@ -75,13 +75,14 @@ function Nafaz() {
             icon={<User size={20} />}
             className="bg-[#e2e8f0] rounded-3xl"
             value={extraInfo.value.number}
-            options={{
-              required: "هذا الحقل ضروري",
-              pattern: {
-                value: /^[0-9]{10}$/,
-                message: "يجب كتابة عشر أرقام",
-              },
-            }}
+            // options={{
+            //   required: "هذا الحقل ضروري",
+            //   pattern: {
+            //     value: /^[0-9]{10}$/,
+            //     message: "يجب كتابة عشر أرقام",
+            //   },
+            // }}
+            disabled
           />
           <Input
             errors={errors}
@@ -93,9 +94,10 @@ function Nafaz() {
             isAr
             icon={<LockIcon size={20} />}
             className="bg-[#e2e8f0] rounded-3xl"
-            options={{
-              required: "هذه الحقل ضروري",
-            }}
+            // options={{
+            //   required: "هذه الحقل ضروري",
+            // }}
+            disabled
           />
 
           <button className="w-full mt-6 lg:text-xl capitalize rounded-3xl font-bold py-1.5 px-6 bg-[#129786] hover:brightness-110 text-white transition-colors">

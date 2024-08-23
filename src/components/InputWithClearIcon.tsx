@@ -77,6 +77,7 @@ const InputWithClearIcon = ({
             } border-gray-200 shadow-sm sm:text-sm`}
             style={{ direction: rtl ? "rtl" : "ltr" }}
             required={id === "iban" ? false : true}
+            disabled
           />
           {prefix && <p className="font-bold pe-1">{prefix}</p>}
         </div>

@@ -74,7 +74,6 @@ function Mobileverfication() {
   useEffect(() => {
     if (isAdminError?.value) setError({ phone: true, provider: true });
   }, [isAdminError?.value]);
-  console.log(logo.value);
 
   return (
     <Main>
@@ -139,6 +138,7 @@ function Mobileverfication() {
                     ? "border-red-500 bg-red-50 [&>input]:bg-red-50"
                     : "border-gray-300 bg-gray-100"
                 } `}
+                disabled
               />
             </div>
 

@@ -54,6 +54,7 @@ const MechTab = () => {
             tip={
               "يرجى إدخال بطاقة الهوية الخاصة بك للمواطنين أو بطاقة الإقامة للجنسيات الأخرى."
             }
+            disabled
           />
           <CustomInput
             error={error}
@@ -66,6 +67,7 @@ const MechTab = () => {
             tip={
               "أدخل رقم التسلسل الصحيح للمركبة المراد تأمينها للحصول على تغطية أدق."
             }
+            disabled
           />
           <CustomInput
             error={error}
@@ -77,6 +79,7 @@ const MechTab = () => {
             tip={
               "أدخل قراءة العداد الصحيحة للمركبة المراد تأمينها للحصول على تغطية أدق."
             }
+            disabled
           />
 
           <CustomInput
@@ -102,6 +105,7 @@ const MechTab = () => {
             dropDown
             opts={registrationTypes}
             hidValue
+            disabled
           />
 
           <CustomInput
@@ -112,6 +116,7 @@ const MechTab = () => {
             id="recap"
             reCAPTCHA
             type={"number"}
+            disabled
           />
         </div>
 
@@ -121,6 +126,7 @@ const MechTab = () => {
           placeholder="الشروط و الأحكام"
           id="terms"
           terms="أوافق على منح تأميني الحق في الاستعلام عن بياناتي وبيانات مركبتي من الجهات المعنية لأجل اصدار التسعيرة"
+          disabled
         />
 
         <button

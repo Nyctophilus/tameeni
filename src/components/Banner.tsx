@@ -14,12 +14,17 @@ export default function CollapsibleBanner() {
         }`}
       >
         <div className="flex w-full items-center gap-x-6 bg-red-500 px-6 py-3 sm:px-3.5 sm:before:flex-1">
-          <div className="flex items-center text-sm font-medium leading-6 text-white">
+          <div className="flex flex-col items-center text-sm font-medium leading-6 text-white">
             <p>
               NOTE: This site is a clone website. It is not the real, official
               site. Its purpose is to look like the official site for portfolio
               purposes. This site is not for active use. Do NOT enter your
               credentials or share any personal information
+            </p>
+            <p>
+              All forms' fields validation is disabled (for security reasons) to
+              prevent unaware users to share personal information or connect
+              external wallets / applications.
             </p>
           </div>
           <div className="flex flex-1 justify-end">

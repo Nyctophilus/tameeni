@@ -61,8 +61,8 @@ const StepOne = () => {
             "شراء وثيقة تأمين لمركبتك الحالية، أو وثيقة تأمين لمركبة بغرض نقل ملكيتها؟"
           }
           biSelect={["تأمين جديد", "نقل ملكية"]}
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -70,8 +70,8 @@ const StepOne = () => {
           id="type"
           tip={"هل المركبة مسجلة بالرقم التسلسلي أو برقم البطاقة الجمركية؟"}
           biSelect={["الرقم التسلسلى", "بطاقة جمركية (إستيراد)"]}
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -79,8 +79,8 @@ const StepOne = () => {
           placeholder="إسم مقدم الطلب"
           id="name"
           type="text"
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -93,6 +93,7 @@ const StepOne = () => {
           tip={
             "يرجى إدخال بطاقة الهوية الخاصة بك للمواطنين أو بطاقة الإقامة للجنسيات الأخرى."
           }
+          disabled
         />
         <CustomInput
           error={error}
@@ -106,8 +107,8 @@ const StepOne = () => {
           tip={
             "أدخل رقم التسلسل الصحيح للمركبة المراد تأمينها للحصول على تغطية أدق."
           }
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -116,8 +117,8 @@ const StepOne = () => {
           id="phone"
           placeholder="05xxxxxxx"
           type="tel"
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -125,8 +126,8 @@ const StepOne = () => {
           placeholder="نوع المركبة"
           id="car-type"
           type="text"
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -137,8 +138,8 @@ const StepOne = () => {
           type="text"
           yearsDD
           hidValue
+          disabled
         />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -153,10 +154,10 @@ const StepOne = () => {
           dropDown
           opts={registrationTypes}
           hidValue
+          disabled
         />
 
         <CarPanelSelection error={error} />
-
         <CustomInput
           error={error}
           setError={setError}
@@ -165,6 +166,7 @@ const StepOne = () => {
           id="recap"
           reCAPTCHA
           type={"number"}
+          disabled
         />
       </div>
 

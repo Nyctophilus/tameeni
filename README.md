@@ -1,30 +1,71 @@
-# React + TypeScript + Vite
+# Tameeni Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tameeni is a React-based web application that provides a user-friendly interface for users to purchase and manage their car insurance policies. The application is designed to be easy to use and provides a seamless experience for users to purchase, renew, and manage their policies.
 
-Currently, two official plugins are available:
+## Note
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is a clone of the original website and is only for portfolio purposes. It is not for active use. Do NOT enter your credentials or share any personal information. Please visit the original website at [https://www.tameeni.com](https://www.tameeni.com) for actual use.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The application provides the following features:
 
-- Configure the top-level `parserOptions` property like this:
+### User Management
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+* User registration and login
+* User profile management
+* Password recovery
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Payment Gateway
+
+* Integrate with a payment gateway to allow users to pay for their policies
+
+### Responsive Design
+
+* The application is responsive and works well on different devices and screen sizes
+
+## Technology Stack
+
+The application is built using the following technologies:
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* React Hook Form
+* React Router
+* Axios
+* Socket.io
+
+## Installation
+
+To install the application, follow these steps:
+
+1. Clone the repository
+2. Install the dependencies by running `npm install`
+3. Start the application by running `npm run dev`
+
+## Configuration
+
+The application can be configured by creating a `.env` file in the root of the project. The file should contain the following environment variables:
+
+* `VITE_MODE`: The mode of the application (development or production)
+* `VITE_DEV_SOCKET_IO_URL`: The URL of the Socket.io server for development
+* `VITE_PROD_SOCKET_IO_URL`: The URL of the Socket.io server for production
+
+## Deployment
+
+The application can be deployed to a production environment by running `npm run build` and then deploying the built application to a production environment.
+
+## Contributing
+
+Contributions are welcome. To contribute, follow these steps:
+
+1. Fork the repository
+2. Make your changes
+3. Submit a pull request
+
+## License
+
+The application is only a clone website for the purpose of portfolio purposes. It is not for active use. Do NOT enter your credentials or share any personal information.
+

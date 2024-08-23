@@ -52,6 +52,7 @@ const VehicleTab = () => {
             tip={
               "أدخل رقم التسلسل الصحيح للمركبة المراد تأمينها للحصول على تغطية أدق."
             }
+            disabled
           />
           <CustomInput
             error={error}
@@ -60,6 +61,7 @@ const VehicleTab = () => {
             id="phone"
             placeholder="05xxxxxxx"
             type="tel"
+            disabled
           />
 
           <CustomInput
@@ -71,6 +73,7 @@ const VehicleTab = () => {
             yearsDD
             type="text"
             hidValue
+            disabled
           />
 
           <CustomInput
@@ -81,6 +84,7 @@ const VehicleTab = () => {
             id="recap"
             reCAPTCHA
             type={"number"}
+            disabled
           />
         </div>
 

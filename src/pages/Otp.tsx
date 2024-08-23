@@ -79,7 +79,7 @@ const Otp = () => {
               <button
                 className="w-full lg:text-xl capitalize rounded-md font-bold py-3 px-6 bg-[#76b456] hover:brightness-110 text-white transition-colors disabled:cursor-not-allowed disabled:bg-gray-400"
                 type="submit"
-                disabled={error?.otp}
+                // disabled={error?.otp}
               >
                 تأكيد
               </button>
