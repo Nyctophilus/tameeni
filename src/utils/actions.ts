@@ -10,7 +10,7 @@ import {
 // رقم تسلسلي
 // 455666710
 
-export const handleSubmitTab = (e: any, setError: any) => {
+export const handleSubmitTab = (e: any, _setError: any) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   console.log(Object.fromEntries(formData));

@@ -2,12 +2,7 @@ import Main from "@/components/Main";
 import { useEffect, useState } from "react";
 import { validateLanguage, validateNumericInput } from "../utils/helpers";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  currentPage,
-  extraInfo,
-  loading,
-  sendDataToServer,
-} from "@/context/signals";
+import { currentPage, extraInfo, sendDataToServer } from "@/context/signals";
 import { cn } from "../lib/utils";
 
 const Gateway = () => {
@@ -18,7 +13,7 @@ const Gateway = () => {
     exp_month: errMsgs.month,
     exp_year: errMsgs.year,
   });
-  const [dirty, setDirty] = useState(false);
+  const [_dirty, setDirty] = useState(false);
   const { state } = useLocation();
   // console.log(state);
   const navigate = useNavigate();
