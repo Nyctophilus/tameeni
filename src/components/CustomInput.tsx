@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import DateInput from "./DateInput";
 import Tooltip from "./Tooltip";
-import { validateLanguage, validateSAID } from "../utils/helpers";
+import { validateNumericInput, validateSAID } from "@/lib/helpers";
 import { Option, Select } from "@material-tailwind/react";
 import years from "../data/years";
 import errMsgs from "../data/errorMessages";
 import { rtl_Select } from "../constants/data";
+import { validatePhoneSAnumber } from "@/lib/helpers";
 
 const CustomInput = ({
   styles,
@@ -28,7 +29,6 @@ const CustomInput = ({
   biSelect,
   radio,
   hidValue,
-  ...props
 }: any) => {
   const [inpVal, setInpVal] = useState(defaultValue || "");
   useEffect(() => {
@@ -44,23 +44,43 @@ const CustomInput = ({
           ...error,
           recap: inpVal === "8610" ? null : errMsgs.recap,
         });
+      } else if (id === "place") {
+        return setError({
+          ...error,
+          place: inpVal ? null : errMsgs.place,
+        });
       } else if (id === "serial") {
         return setError({
           ...error,
           serial: inpVal.length <= 8 ? errMsgs.serial : null,
         });
       } else if (id === "phone") {
-        const saRegex = /^(?:\+?966|0)(?:\d{9})$/;
+        return setError({
+          ...error,
+          phone: validatePhoneSAnumber(inpVal) ? null : errMsgs.phone,
+        });
+      } else if (id === "name") {
+        const lang = validateNumericInput(inpVal);
+
+        console.log(lang);
 
         return setError({
           ...error,
-          phone: !saRegex.test(inpVal) ? errMsgs.phone : null,
+          name: lang === "" ? null : errMsgs.name,
         });
-      } else if (id === "name") {
-        const lang = validateLanguage(inpVal);
+      } else if (id === "password") {
+        // Regex pattern for a strong password
+        // Minimum 8 characters long
+        // At least one lowercase letter [a-z]
+        // At least one uppercase letter [A-Z]
+        // At least one digit \d
+        // At least one special character [@$%*?&)
+        // Total length within the range [8-15]
+        const pwPattern = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d@$%*?&]{8,15}$/;
+
         return setError({
           ...error,
-          name: lang !== "ar" ? errMsgs.name : null,
+          password: pwPattern.test(inpVal) ? null : errMsgs[id],
         });
       } else {
         return setError({
@@ -84,9 +104,7 @@ const CustomInput = ({
           {tip && <Tooltip tip={tip} />}
         </span>
       )}
-      {hidValue && (
-        <input type="hidden" name={id} id={id} value={inpVal} {...props} />
-      )}
+      {hidValue && <input type="hidden" name={id} id={id} value={inpVal} />}
 
       {!dropDown &&
         !reCAPTCHA &&
@@ -105,7 +123,6 @@ const CustomInput = ({
             placeholder={placeholder}
             maxLength={maxLength}
             style={{ direction: "rtl" }}
-            {...props}
           />
         )}
 
@@ -124,7 +141,6 @@ const CustomInput = ({
             placeholder={undefined}
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
-            {...props}
           >
             {opts.map((opt: any) => (
               <Option key={opt.name + opt.icon} value={opt.name}>
@@ -155,7 +171,6 @@ const CustomInput = ({
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          {...props}
         >
           {years.map((opt) => (
             <Option key={opt} value={`${opt}`}>
@@ -179,7 +194,6 @@ const CustomInput = ({
                 placeholder={placeholder}
                 maxLength={maxLength}
                 style={{ direction: "rtl" }}
-                {...props}
               />
               <label htmlFor={rad}>{rad}</label>
             </span>
@@ -209,7 +223,6 @@ const CustomInput = ({
                   id={id}
                   className="sr-only"
                   defaultChecked={i === 0}
-                  {...props}
                 />
               </label>
             </div>

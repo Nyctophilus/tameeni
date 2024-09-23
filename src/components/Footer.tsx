@@ -86,11 +86,8 @@ const Footer = () => {
               </div> */}
 
               <div className="flex flex-col gap-4 mt-6 relative z-10 text-center lg:text-right">
-                {/* <p>© mohammed fayad 2024. جميع الحقوق محفوظة</p> */}
-                <p>
-                  موقع نسخة تجريبية فقط بديلة للاصلى شركة تأمينى لوساطة التأمين
-                  الالكتروني شركة شخص واحد
-                </p>
+                <p>© تأميني 2024. جميع الحقوق محفوظة</p>
+                <p>شركة تأميني لوساطة التأمين الالكتروني شركة شخص واحد</p>
                 <div className="flex gap-2 items-center justify-center lg:justify-normal">
                   <p>تطوير وتشغيل </p>
                   <img

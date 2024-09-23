@@ -1,15 +1,25 @@
 import { useState } from "react";
-import {
-  Input,
-  Popover,
-  PopoverHandler,
-  PopoverContent,
-} from "@material-tailwind/react";
+import { Input } from "@material-tailwind/react";
 import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
+import { DateRange } from "react-day-picker";
+import { PopoverClose } from "@radix-ui/react-popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "./ui/calendar";
+import { arEG } from "date-fns/locale";
 
 export default function DateInput({ id, placeholder, required }: any) {
-  const [date, setDate] = useState(null);
+  const initDate = new Date();
+  const [date, setDate] = useState<DateRange | any>(initDate);
+
+  const handleDateChange = (newDate: any) => {
+    if (newDate) {
+      setDate(newDate);
+    }
+  };
 
   return (
     <div className="relative">
@@ -19,12 +29,18 @@ export default function DateInput({ id, placeholder, required }: any) {
         className="w-6 h-6 absolute left-3 top-1/2 -translate-y-1/2"
       />
 
-      <Popover placement="bottom">
-        <PopoverHandler>
+      <Popover>
+        <PopoverTrigger className="w-full focus-within:outline-main/30">
           <Input
             label={placeholder}
             onChange={() => null}
-            value={date ? format(date, "PPP") : ""}
+            value={
+              date
+                ? format(date, "dd-MM-yyyy", {
+                    locale: arEG,
+                  })
+                : ""
+            }
             id={id}
             name={id}
             placeholder={placeholder}
@@ -33,52 +49,30 @@ export default function DateInput({ id, placeholder, required }: any) {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           />
-        </PopoverHandler>
+        </PopoverTrigger>
 
         <PopoverContent
-          className="z-50"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
+          align={window.innerWidth < 768 ? "center" : "start"}
+          className="flex w-auto flex-col space-y-2 p-2"
         >
-          <DayPicker
-            mode="single"
-            selected={date || undefined}
-            onSelect={setDate as any}
-            showOutsideDays
-            className="border-0"
-            classNames={{
-              caption: "flex justify-center py-2 mb-4 relative items-center",
-              caption_label: "text-sm font-medium text-gray-900",
-              nav: "flex items-center",
-              nav_button:
-                "h-6 w-6 bg-transparent hover:bg-blue-gray-50 p-1 rounded-md transition-colors duration-300",
-              nav_button_previous: "absolute left-1.5",
-              nav_button_next: "absolute right-1.5",
-              table: "w-full border-collapse",
-              head_row: "flex font-medium text-gray-900",
-              head_cell: "m-0.5 w-9 font-normal text-sm",
-              row: "flex w-full mt-2",
-              cell: "text-gray-600 rounded-md h-9 w-9 text-center text-sm p-0 m-0.5 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-900/20 [&:has([aria-selected].day-outside)]:text-white [&:has([aria-selected])]:bg-gray-900/50 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-              day: "h-9 w-9 p-0 font-normal",
-              day_range_end: "day-range-end",
-              day_selected:
-                "rounded-md bg-gray-900 text-white hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white",
-              day_today: "rounded-md bg-gray-200 text-gray-900",
-              day_outside:
-                "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",
-              day_disabled: "text-gray-500 opacity-50",
-              day_hidden: "invisible",
-            }}
-            // components={{
-            //   IconLeft: ({ ...props }) => (
-            //     <ChevronLeftIcon {...props} className="h-4 w-4 stroke-2" />
-            //   ),
-            //   IconRight: ({ ...props }) => (
-            //     <ChevronRightIcon {...props} className="h-4 w-4 stroke-2" />
-            //   ),
-            // }}
-          />
+          <div className="rounded-md border">
+            <Calendar
+              mode="single"
+              initialFocus
+              defaultMonth={date}
+              selected={date}
+              onSelect={handleDateChange}
+              numberOfMonths={1}
+              dir="ltr"
+              className="max-w-72 sm:max-w-none"
+              locale={arEG}
+            />
+          </div>
+          <PopoverClose>
+            <p className="w-full border rounded-md py-1 bg-main text-white hover:text-white/85">
+              تأكيد
+            </p>
+          </PopoverClose>
         </PopoverContent>
       </Popover>
     </div>

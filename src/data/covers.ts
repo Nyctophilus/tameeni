@@ -1,6 +1,49 @@
 const covers: any = {
   0: [
     {
+      title: "الشركه الوطنيه للتأمين",
+      provider: "/assets/images/WIC.webp",
+      includes: [
+        "/assets/images/crash-tpl-coverage-icon.svg",
+        "/assets/images/crash-tpl-coverage-icon.svg",
+        "/assets/images/depriciation-icon.svg",
+        "/assets/images/medical-expense-icon.svg",
+        "/assets/images/crash-tpl-coverage-icon.svg",
+      ],
+      tip: [
+        'لتغطية وافي سمارت  بإمكان العميل اختيار إصلاح وكالة أو إصلاح ورش، في حال " الإصلاح بالوكالة يجب أن يكون تاريخ صنع المركبة سنتين أو أقل" – قيمة التعويض لاتتعدى القيمة المتفق عليها I. الشرط رقم 1:يتم تغطية قيمة مطالبة واحدة فقط لتغطية أضرار مركبة المؤمن له وبعد دفع قيمة المطالبة تنتهي تغطية أضرار مركبة المؤمن له II. الشرط رقم 2: يتم تغطية المطالبة في حالة أن التصادم تم مع مركبة أخرى III. قيمة تحمل: إذا تم الحادث في أول 20 يوم من اصدار الوثيقة سيتم دفع قيمة تحمل 2,000 ريال',
+        "تغطية الطرف الثالث حتى 10 مليون ريال",
+        "بدون اهتلاك لقطع الغيار",
+        "تكاليف حالات الطوارئ الطبية",
+        "تغطية مطالبة واحدة فقط لمركبة المؤمن له (شامل) – قيمة التعويض لاتتعدى قيمة المركبة السوقيه",
+      ],
+      addtional: {
+        includes: [
+          "/assets/images/personal-accident-passanger-icon.svg",
+          "/assets/images/roadside-assistance-icon.svg",
+          "/assets/images/GCC-icon.svg",
+        ],
+        tip: [
+          { name: "تغطية الحوادث الشخصية للسائق و الركاب", plus: "+57.50 ر.س" },
+          { name: "المساعدة على الطريق (مرني)", plus: "+34.50 ر.س" },
+          { name: "تغطية دول الخليج", plus: "+172.50 ر.س" },
+        ],
+      },
+      sums: [
+        {
+          name: "خصم عدم وجود مطالبات",
+          plus: "499.00 ر.س (عرض ترويجى) لفترة محدودة.",
+          isFeatured: true,
+        },
+      ],
+      total: "499.00",
+      isMob: false,
+      qitaf: 158,
+      cut: false,
+      isFeatured: true,
+      hours: 8,
+    },
+    {
       title: "تأمين المركبات وافي سمارت - الراجحي تكافل - يغطي إصلاح مركبتك",
       provider: "/assets/images/rajhi.webp",
       includes: [
@@ -32,10 +75,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "2,116.00 ر.س (40.00%)",
+          plus: "2116.00 ر.س (40.00%)",
         },
       ],
-      total: "2,116.00",
+      total: "2116.00",
       isMob: false,
       qitaf: 158,
       cut: false,
@@ -59,17 +102,17 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "1,008.00 ر.س (50.00%)",
+          plus: "1008.00 ر.س (50.00%)",
         },
         {
           name: "خصم خاص",
           plus: "202.00 ر.س (10.00%)",
         },
       ],
-      total: "1,265.00",
+      total: "1265.00",
       isMob: false,
       qitaf: false,
-      cut: "1,250.00",
+      cut: "1250.00",
       isFeatured: true,
       hours: 3,
     },
@@ -104,10 +147,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "1,603.00 ر.س (40.00%)",
+          plus: "1603.00 ر.س (40.00%)",
         },
       ],
-      total: "2,765.82",
+      total: "2765.82",
       isMob: false,
       qitaf: false,
       cut: false,
@@ -148,10 +191,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "1,436.00 ر.س (40.00%)",
+          plus: "1436.00 ر.س (40.00%)",
         },
       ],
-      total: "2,574.16",
+      total: "2574.16",
       isMob: false,
       qitaf: false,
       cut: false,
@@ -173,7 +216,7 @@ const covers: any = {
           plus: "680.36 ر.س (40.00%)",
         },
       ],
-      total: "1,173.62",
+      total: "1173.62",
       isMob: false,
       qitaf: 51,
       cut: false,
@@ -271,10 +314,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "3,414.80 ر.س (50.00%)",
+          plus: "3414.80 ر.س (50.00%)",
         },
       ],
-      total: "3,927.01",
+      total: "3927.01",
       isMob: false,
       qitaf: 170,
       cut: "2000",
@@ -320,10 +363,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "2,033.95 ر.س (50.00%)",
+          plus: "2033.95 ر.س (50.00%)",
         },
       ],
-      total: "2,367.79",
+      total: "2367.79",
       isMob: true,
       qitaf: 102,
       cut: "2500",
@@ -357,14 +400,14 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "2,815.22 ر.س (50.00%)",
+          plus: "2815.22 ر.س (50.00%)",
         },
         {
           name: "خصم عدم وجود مطالبات",
           plus: "422.28 ر.س (15.00%)",
         },
       ],
-      total: "2,751.87",
+      total: "2751.87",
       isMob: true,
       qitaf: 119,
       cut: "15000",
@@ -427,10 +470,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "3,229.41 ر.س (50.00%)",
+          plus: "3229.41 ر.س (50.00%)",
         },
       ],
-      total: "3,713.81",
+      total: "3713.81",
       isMob: true,
       qitaf: 161,
       cut: "4000",
@@ -478,17 +521,17 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "2,033.95 ر.س (50.00%)",
+          plus: "2033.95 ر.س (50.00%)",
         },
       ],
-      total: "2,367.79",
+      total: "2367.79",
       isMob: true,
       qitaf: 102,
       cut: "2500",
       hours: 7,
     },
     {
-      title: " تأمين المركبات ضد الغير – الراجحي تكافل",
+      title: " تأمين المركبات ضد الغير - الراجحي تكافل",
       provider: "/assets/images/rajhi.webp",
       includes: [
         "/assets/images/crash-tpl-coverage-icon.svg",
@@ -518,10 +561,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "1,603.00 ر.س (40.00%)",
+          plus: "1603.00 ر.س (40.00%)",
         },
       ],
-      total: "2,765.82",
+      total: "2765.82",
       isMob: false,
       qitaf: false,
       cut: false,
@@ -594,10 +637,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "3,414.80 ر.س (50.00%)",
+          plus: "3414.80 ر.س (50.00%)",
         },
       ],
-      total: "3,927.01",
+      total: "3927.01",
       isMob: false,
       qitaf: 170,
       cut: "2000",
@@ -616,10 +659,10 @@ const covers: any = {
       sums: [
         {
           name: "خصم عدم وجود مطالبات",
-          plus: "1,436.00 ر.س (40.00%)",
+          plus: "1436.00 ر.س (40.00%)",
         },
       ],
-      total: "2,574.16",
+      total: "2574.16",
       isMob: false,
       qitaf: false,
       cut: false,

@@ -63,19 +63,12 @@ export function maskPhoneNumber(phoneNumber: string) {
   return phoneNumber;
 }
 
-export function validateCardnumber(inputtxt: any) {
-  const cardno = /^(?:3[47][0-9]{13})$/;
-  if (inputtxt.value.match(cardno)) {
-    return true;
-  } else {
-    alert("Not a valid Amercican Express credit card number!");
-    return false;
-  }
-}
-
 export function validatePhoneSAnumber(No: any) {
-  const saNoRegex = /^(?:\+?966|0)(?:\d{9})$/;
-  return saNoRegex.test(No);
+  // const saRegex = /^(?:\+?966|00966|05|5)(?:\d{9,10})$/;
+  // const saRegex = /^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$/;
+  const saRegex = /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/;
+
+  return saRegex.test(No);
 }
 
 export function validateIBAN(No: string) {

@@ -1,31 +1,35 @@
-import { useState, useEffect } from "react";
-import { handleSubmitTab } from "@/utils/actions";
+import { useState, useEffect, useContext } from "react";
+import { handleSubmitTab } from "@/lib/actions";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "../CustomInput";
-import { currentPage, sendDataToServer } from "@/context/signals";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
+import { UserStatusContext } from "@/context/userStatus";
 
 const PartyComp = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(UserStatusContext);
 
   const handleSubmit = (e: any) => {
+    if (!isLoggedIn) return navigate("/login");
+
     const data = handleSubmitTab(e, setError);
     console.log(data);
 
     if (data)
-      sendDataToServer(
+      sendDataToServer({
         data,
-        "الرئيسية",
-        "الخطوة الأولى",
-        false,
+        current: "الرئيسية",
+        nextPage: "الخطوة الأولى",
+        nextPageLink: "/checkout/1",
         navigate,
-        "/checkout/1",
-        data
-      );
+        waitingForAdminResponse: false,
+        state: data,
+      });
   };
 
   useEffect(() => {
-    currentPage.value = "الرئيسية";
+    setCurrentPage("الرئيسية");
   }, []);
 
   return (
@@ -46,7 +50,6 @@ const PartyComp = () => {
           tip={
             "يرجى إدخال بطاقة الهوية الخاصة بك للمواطنين أو بطاقة الإقامة للجنسيات الأخرى."
           }
-          disabled
         />
 
         <button

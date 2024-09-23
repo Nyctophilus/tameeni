@@ -1,10 +1,10 @@
-"use client";
-
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { CustomSelectProps } from "@/types";
+import Label from "./label";
 
 const Select = SelectPrimitive.Root;
 
@@ -158,3 +158,68 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 };
+export const CustomSelect = ({
+  className,
+  label,
+  placeholder,
+  id,
+  register,
+  errors,
+  options = {},
+  sels,
+  setValue,
+}: CustomSelectProps) => (
+  <div>
+    {label && <Label label={label} id={id} className={"text-main"} />}
+    <Select onValueChange={(selected) => setValue && setValue(id, selected)}>
+      <SelectTrigger
+        className={cn(
+          errors[id] ? "border-red-500" : "border-gray-300 bg-gray-100",
+          className
+        )}
+        style={{ direction: "rtl" }}
+      >
+        <SelectValue
+          className="text-gray-400"
+          placeholder={placeholder || `يرجى أختيار ${label}...`}
+          id={id}
+          {...register(id, options)}
+        />
+      </SelectTrigger>
+      <SelectContent className="flex">
+        {sels.map((sel: { name: string; code?: string; image?: string }) => (
+          <SelectItem
+            key={sel.name}
+            className="w-full"
+            value={sel.name}
+            style={{ direction: "rtl" }}
+          >
+            <div className="flex items-center gap-2 sm:gap-4">
+              {sel.image && (
+                <div className="bg-main/15 rounded-full">
+                  <img
+                    className="size-6"
+                    src={sel.image}
+                    alt={`${sel.name} image`}
+                  />
+                </div>
+              )}
+              <p>{sel.name}</p>
+
+              {sel.code && <p>,{sel.code}</p>}
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+
+    <p
+      className={cn(
+        "text-xs text-red-500 h-5 transition-opacity",
+        errors?.[id] ? "opacity-100" : "opacity-0"
+      )}
+    >
+      {(errors?.[id]?.message as string) || label + " مطلوب"}
+    </p>
+  </div>
+);

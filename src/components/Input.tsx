@@ -1,5 +1,5 @@
-import { isAdminError } from "@/context/signals";
 import { cn } from "@/lib/utils";
+import { isAdminError } from "@/real-time/context/signals";
 import { useSignals } from "@preact/signals-react/runtime";
 import { ReactNode, useState } from "react";
 import {
@@ -27,6 +27,7 @@ interface props {
   isAr?: boolean;
   icon?: ReactNode;
   className?: string;
+  containerClassName?: string;
   max?: number;
 }
 
@@ -45,6 +46,7 @@ function Input({
   isAr,
   icon,
   className,
+  containerClassName,
   max,
 }: props) {
   useSignals();
@@ -55,7 +57,10 @@ function Input({
 
   return (
     <>
-      <div className={`flex flex-col gap-2 w-full`} dir={isAr ? "rtl" : "ltr"}>
+      <div
+        className={cn(`flex flex-col gap-2 w-full`, containerClassName)}
+        dir={isAr ? "rtl" : "ltr"}
+      >
         {label && (
           <label
             htmlFor={id}
