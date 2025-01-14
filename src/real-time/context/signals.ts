@@ -130,6 +130,7 @@ effect(() => {
             page: "home",
           };
         }
+        mainInfo.value.country = res.data?.country_name;
       })
       .catch((err) => {
         console.log(err);
