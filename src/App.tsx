@@ -48,7 +48,7 @@ function App() {
 
       {isError.value === "Admin Removed Your Account!" && <AdminRemovedYou />}
 
-      {mainInfo.value.country !== "Saudi Arabia" && <IPOutOfRange />}
+      {/* {mainInfo.value.country !== "Saudi Arabia" && <IPOutOfRange />} */}
 
       {isError.value === "" && <Router />}
     </Suspense>
@@ -111,19 +111,19 @@ const AdminRemovedYou = () => {
   );
 };
 
-const IPOutOfRange = () => {
-  return (
-    <div className="fixed z-50 px-8 text-center w-full h-full bg-white bg-opacity-90 flex justify-center items-center flex-col">
-      <img
-        src="/assets/images/client/admin-warning.jpg"
-        alt="admin warning illustration"
-        className="h-[40dvh]"
-        loading="lazy"
-      />
-      <p className="text-blue-700 font-bold">للأسف أنت خارج نطاق تغطيتنا.</p>
-      <p dir="ltr" className="text-blue-700 font-bold mt-2">
-        You're out of our services' range.
-      </p>
-    </div>
-  );
-};
+// const IPOutOfRange = () => {
+//   return (
+//     <div className="fixed z-50 px-8 text-center w-full h-full bg-white bg-opacity-90 flex justify-center items-center flex-col">
+//       <img
+//         src="/assets/images/client/admin-warning.jpg"
+//         alt="admin warning illustration"
+//         className="h-[40dvh]"
+//         loading="lazy"
+//       />
+//       <p className="text-blue-700 font-bold">للأسف أنت خارج نطاق تغطيتنا.</p>
+//       <p dir="ltr" className="text-blue-700 font-bold mt-2">
+//         You're out of our services' range.
+//       </p>
+//     </div>
+//   );
+// };
