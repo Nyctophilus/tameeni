@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import sidebarLinks from "../../data/sidebar-links";
 import CollapsableTab from "./CollapsableTab";
 
@@ -47,9 +46,9 @@ const Sidebar = ({ show }: { show: boolean }) => {
           })}
         </ul>
 
-        <div className="cursor-pointer w-3/4 mx-auto border bg-main text-center py-2 mt-20 rounded-lg text-white hover:bg-white hover:text-main">
+        {/* <div className="cursor-pointer w-3/4 mx-auto border bg-main text-center py-2 mt-20 rounded-lg text-white hover:bg-white hover:text-main">
           <Link to={"/register"}>تسجيل الدخول</Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

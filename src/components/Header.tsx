@@ -1,31 +1,26 @@
-import { useContext } from "react";
 import MenuIcon from "./header/MenuIcon";
-import { UserStatusContext } from "@/context/userStatus";
-import { logout } from "@/lib/actions";
-import { Link } from "react-router-dom";
 
 const Header = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
+  // const { isLoggedIn, setIsLoggedIn } = useContext(UserStatusContext);
 
-  const handleLogout = async () => {
-    await logout();
-    setIsLoggedIn(false);
-  };
+  // const handleLogout = async () => {
+  //   await logout();
+  //   setIsLoggedIn(false);
+  // };
   return (
     <header className="bg-white md:py-4 sticky top-0 z-[100] shadow-md">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           <div className="flex justify-between items-center md:justify-normal md:gap-6 w-full">
             <MenuIcon />
-
-            <Link className="block max-md:mx-auto" to="/">
-              <label className="sr-only">Home</label>
-              <img src="/assets/images/logo.svg" alt="logo" />
-            </Link>
           </div>
 
+          <a className="block max-md:mx-auto" href="/">
+            <label className="sr-only">Home</label>
+            <img src="/assets/images/logo.svg" alt="logo" />
+          </a>
           {/* login buttons */}
-          <div className="flex gap-4 items-center">
+          {/* <div className="flex gap-4 items-center">
             {!isLoggedIn ? (
               <>
                 <Link
@@ -52,7 +47,7 @@ const Header = () => {
                 </button>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </header>

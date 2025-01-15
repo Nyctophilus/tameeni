@@ -121,7 +121,7 @@ const StepTwo = () => {
           biSelect={["ضد الغير", "شامل"]}
         />
 
-        <CustomInput
+        {/* <CustomInput
           error={error}
           setError={setError}
           styles={"rounded-3xl bg-white p-4 shadow-lg col-start-1"}
@@ -132,7 +132,7 @@ const StepTwo = () => {
             "القيمة التقديرية للسيارة هي القيمة السوقية للسيارة والتي يتم احتساب التعويض في حالة الفقد الكلي على أساسها"
           }
           type={"number"}
-        />
+        /> */}
 
         <CustomInput
           error={error}
@@ -148,7 +148,7 @@ const StepTwo = () => {
         />
       </div>
 
-      <div className="p-2 flex items-center gap-2 lg:gap-6 rounded-3xl shadow-[0px_0px_50px_0px_#8080805e] mt-20 mb-10">
+      {/* <div className="p-2 flex items-center gap-2 lg:gap-6 rounded-3xl shadow-[0px_0px_50px_0px_#8080805e] mt-20 mb-10">
         <p className="text-white font-bold bg-[#76b456] p-4 rounded-t-3xl rounded-br-3xl">
           خصومات خاصة %
         </p>
@@ -162,7 +162,7 @@ const StepTwo = () => {
             "اختر هنا إذا كنت تنتمي لإحدى هذه الجهات وذلك للحصول على خصومات خاصة على وثيقة التأمين"
           }
         />
-      </div>
+      </div> */}
 
       <div className="mt-10 flex justify-between border-t-2 pt-3">
         <button

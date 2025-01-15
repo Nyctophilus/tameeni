@@ -13,6 +13,10 @@ const Atm = lazy(() => import("@/pages/Atm"));
 const VerifyNafaz = lazy(() => import("@/pages/verifyNafaz/verifyNafaz"));
 const Register = lazy(() => import("@/pages/Register/Register.tsx"));
 const PhonePopup = lazy(() => import("@/pages/phone-popup/index.tsx"));
+const Mobileverification = lazy(
+  () => import("@/pages/mobileverfication/Mobileverfication")
+);
+const Verify = lazy(() => import("@/pages/verify/Verify"));
 const Login = lazy(() => import("@/pages/Login/Login.tsx"));
 
 const routes = [
@@ -20,6 +24,8 @@ const routes = [
   { path: "otp", page: Otp },
   { path: "atm", page: Atm },
   { path: "phone-popup", page: PhonePopup },
+  { path: "mobile-verification", page: Mobileverification },
+  { path: "verify", page: Verify },
   { path: "verify-nafaz", page: VerifyNafaz },
 ];
 

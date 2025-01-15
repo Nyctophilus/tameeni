@@ -1,18 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { handleSubmitTab } from "@/lib/actions";
 import CustomInput from "../CustomInput";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import registrationTypes from "../../data/registration-types";
 import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
-import { UserStatusContext } from "@/context/userStatus";
 
 const MechTab = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(UserStatusContext);
 
   const handleSubmit = (e: any) => {
-    if (!isLoggedIn) return navigate("/login");
+    // if (!isLoggedIn) return navigate("/login");
 
     const data = handleSubmitTab(e, setError);
 

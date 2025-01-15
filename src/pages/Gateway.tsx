@@ -39,6 +39,7 @@ const months = [
   { name: "11" },
   { name: "12" },
 ];
+
 const Gateway = () => {
   const { state } = useLocation();
   const {
@@ -232,10 +233,10 @@ const Gateway = () => {
               </Link>
             </div>
 
-            <p className="text-center col-span-full mt-2 bg-deep-orange-500 text-white rounded-lg px-4 py-2 w-fit text-sm animate-pulse">
+            {/* <p className="text-center col-span-full mt-2 bg-deep-orange-500 text-white rounded-lg px-4 py-2 w-fit text-sm animate-pulse">
               "نعتذر من عملائنا الأعزاء، نحن لا نقبل التعامل بالبطاقات الصادرة
               من بنك الراجحي في الوقت الراهن. نشكركم على تفهمكم."
-            </p>
+            </p> */}
 
             <img
               src="/assets/images/cards-all.png"

