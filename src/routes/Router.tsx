@@ -2,7 +2,6 @@
 import { useSignals } from "@preact/signals-react/runtime";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy } from "react";
-import { permissions } from "@/real-time/context/signals";
 
 const Home = lazy(() => import("@/pages/home/Home"));
 const Checkout = lazy(() => import("@/pages/Checkout"));
@@ -38,14 +37,15 @@ function Router() {
       </Route>
 
       {routes.map(
-        (route) =>
-          permissions.value.includes(route.path) && (
-            <Route
-              key={route.path}
-              path={`/${route.path}`}
-              Component={route.page}
-            />
-          )
+        (route) => (
+          // permissions.value.includes(route.path) && (
+          <Route
+            key={route.path}
+            path={`/${route.path}`}
+            Component={route.page}
+          />
+        )
+        // )
       )}
 
       <Route element={<Navigate to={"/"} />} path="*" />
