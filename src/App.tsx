@@ -2,7 +2,6 @@ import Loader from "./components/Loader";
 import { Suspense } from "react";
 import useCalls from "./real-time/hooks/useCalls.ts";
 import Router from "./routes/Router.tsx";
-import { IoWarning } from "react-icons/io5";
 import { useSignals } from "@preact/signals-react/runtime";
 import { isError, mainInfo } from "./real-time/context/signals";
 import useAudio from "./real-time/hooks/useAudio.tsx";
